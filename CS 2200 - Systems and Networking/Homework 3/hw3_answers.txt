@@ -1,0 +1,208 @@
+CS 2200 Spring 2011
+Homework 3
+===================
+Jessie McGarry
+jmcgarry3
+
+---------
+Problem 1
+---------
+
+Part A
+------
+ If the branch is taken, the instructions following the beq in memory need not be execute at the time of the branch. We have to flush the pipeline up to the beq. This means clearing the IF and ID/RR buffers, which corresponds to two NOP's following the branch.
+
+
+Part B
+------
+
+ To start, the beq instruction in fetched from memory and loaded into FBUF.  The needed register values are read from the DPRF(Ry and Rz) are loaded into DBUF, along with the opcode and RX register number. In the EX stage, we perform the subtraction (zero test) and address computation using the ALU and adder, respectively.
+
+Branch taken:
+  The flush feedback signal is asserted, creating two NOPs following the beq. The newly computed PC value is fed back to the mux controlled by the zero bit detection, and loaded into the PC. Thus, the new instructions will follow the NOPs.
+
+Branch not taken:
+  The beq and the instructions following simply pass through the pipeline, doing their respective jobs.
+
+---------
+Problem 2
+---------
+
+Part A
+------
+                         Stage
+Cycle     IF      ID      EX      MEM      WB
+-----     --      --      --      ---      --
+  1       LW       ?       ?       ?        ?
+  2	  ADD	  LW	   ?       ?        ?
+  3	  SW      ADD     LW  	   ?        ?
+  4       SW      ADD     NOP      LW       ?
+  5	  ADDI    SW      ADD     NOP      LW
+  6	  BEQ    ADDI     SW      ADD	   NOP
+  7       NOP     BEQ     ADDI     SW      ADD
+  8	  BEQ     NOP     BEQ     ADDI     SW
+  9	  NOP     BEQ     NOP      BEQ     ADDI
+ 10       LW      NOP     BEQ     NOP      BEQ
+ 11	  ADD     LW      NOP 	  BEQ      NOP
+ 12	  SW      ADD 	  LW  	  NOP  	   BEQ
+ 13 	  SW  	  ADD    NOP      LW       NOP
+ 14	  ADDI    SW     ADD      NOP      LW
+ 15       BEQ     ADDI    SW      ADD      NOP
+
+Part B
+------
+
+i. 13/6 
+ii. (13 cycles * 12 million words)/(3 billion cycles/sec) = .052 seconds
+
+Part C
+------
+
+i. 5
+ii. 0
+iii. 0
+
+Part D
+------
+
+
+---------
+Problem 3
+---------
+~~~~~~
+Part A
+~~~~~~
+
+FCFS:
+                         11111111112222222222
+        time:  012345678901234567890123456789
+               ------------------------------
+     P1        RRRRR
+     P2        wwwwwRRRR
+     P3        wwwwwwwwwRRRRRR
+     P4        wwwwwwwwwwwwwwwRRR
+     P5        wwwwwwwwwwwwwwwwwwR
+
+
+SJF:
+                         11111111112222222222
+        time:  012345678901234567890123456789
+               ------------------------------
+     P1        wwwwwwwwRRRRR  
+     P2        wwwwRRRR
+     P3        wwwwwwwwwwwwwRRRRRR
+     P4        wRRR
+     P5        R
+
+
+Nonpreemptive priority:
+                         11111111112222222222
+        time:  012345678901234567890123456789
+               ------------------------------
+     P1        RRRRR     
+     P2        wwwwwwwwwwwwwwwRRRR
+     P3        wwwwwwwwwRRRRRR
+     P4        wwwwwRRR
+     P5        wwwwwwwwR
+
+
+RR:
+                         11111111112222222222
+        time:  012345678901234567890123456789
+               ------------------------------
+     P1        RwwwwRwwwRwwwRwwR  
+     P2        wRwwwwRwwwRwwwR
+     P3        wwRwwwwRwwwRwwwRwRR
+     P4        wwwRwwwwRwwwR
+     P5        wwwwR
+
+
+Waiting Times:
+       | FCFS  | SJF   | Priority | RR    |
+       ------------------------------------
+    P1 |  0    |  8    |    0     |  12   |
+    P2 |  5    |  4    |    15    |  11   |
+    P3 |  9    |  13   |    9     |  13   |
+    P4 |  15   |   1   |    5     |  10    |
+    P5 |  18   |  0    |    8     |  4    |
+
+
+Turnaround Times:
+       | FCFS  | SJF   | Priority | RR    |
+       ------------------------------------
+    P1 |   5   |   13  |    5     |  17   |
+    P2 |   9   |   8   |   19     |  15   |
+    P3 |   15  |  19   |   15     |  19   |
+    P4 |   18  |  4    |    8     |  13   |
+    P5 |   19  |   1   |    9     |   5   |
+
+
+      
+Scheduler with minimal average waiting time is SJF.
+
+~~~~~~
+Part B
+~~~~~~
+SJF
+
+~~~~~~
+Part C
+~~~~~~
+SJF
+
+~~~~~~
+Part D
+~~~~~~
+SJF
+
+~~~~~~
+Part E
+~~~~~~
+RR
+
+---------
+Problem 4
+---------
+~~~~~~
+Part A
+~~~~~~
+
+First-Fit:
+        370 220 550 120 510
+        put 200 into 370
+        170 220 550 120 510
+	put 320 into 550
+	170 220 230 120 510
+	put 455 into 510
+	170 220 230 120 55
+	put 90 into 170
+	80 220 230 120 55
+	500 must wait
+
+Best-Fit:
+	370 220 550 120 510
+	put 200 into 220
+	370 20 550 120 510
+	put 320 into 370
+	50  20 550 120 510
+	put 455 into 510
+	50  20 550 120 55
+	put 90 into 120
+	50  20 550 30 55
+	put 500 into 550
+	50  20  50 30 55
+
+
+Worst-Fit:
+	370 220 550 120 510
+	put 200 into 550
+	370 220 350 120 510
+	put 320 into 510
+	370 220 350 120 190
+	455 must wait
+	put 90 int0 370
+	280 220 350 120 510
+	500 must wait
+
+
+Most efficient is best-fit.

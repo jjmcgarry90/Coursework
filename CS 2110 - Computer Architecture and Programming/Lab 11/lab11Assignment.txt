@@ -1,0 +1,105 @@
+==================================================================================================================
+CS2110                                             Lab #11                                           Fall 2010
+==================================================================================================================
+
+Objective: Learning about how recursion works in assembly
+
+Don't hesitate to ask the TA's for help. If you are stuck on
+one part, or not clear about what it's asking, feel free to
+ask. Remember, we are here to help you :)
+
+This is not a timed lab so talk with your friends, use the book, use a TA, etc.
+
+Notice: For all of these problems assume the stack is located at xF000.
+
+-----
+Wimpy
+-----
+
+Write a recursive subroutine that adds R0 to R1 (See below code)
+
+void add(int a, int b)
+{
+	if (b == 0)
+		return;
+	else
+		add(a + 1, b - 1);
+}
+
+Specifications
+--------------
+Preconditions:
+R0 contains A
+R1 contains B
+
+Postconditions:
+R0 contains A+B
+R1 is unchanged
+You must preserve all other registers!
+
+----
+Mild
+----
+
+Write recursive sumtorial.
+
+int sumtorial(int a)
+{
+	if (a == 0)
+		return 0;
+	else
+		return a + sumtorial(a - 1);
+}
+
+Specifications
+--------------
+Preconditions:
+R0 contains A
+
+Postconditions:
+R0 contains A still
+R1 contains SUMTORIAL(A)
+You must preserve all other registers!
+
+
+-------
+Medium
+-------
+Write a recursive subroutine that returns 2^X
+
+int twoTotheX(int x)
+{
+	if (x == 0)
+		return 1;
+	else
+	{
+		int y = twoToTheX(x - 1);
+		return y + y;
+	}
+}
+
+Specifications
+--------------
+Preconditions:
+R0 contains x
+
+Postconditions:
+R0 contains x still
+R1 contains 2^x
+You must preserve all other registers!
+
+
+
+-----
+Spicy
+-----
+If you manage to solve the above three problems
+and want a challenge ask me for the problem!
+
+------------
+Deliverables
+------------
+lab11wimpy.asm
+lab11mild.asm
+lab11medium.asm
+lab11spicy.asm

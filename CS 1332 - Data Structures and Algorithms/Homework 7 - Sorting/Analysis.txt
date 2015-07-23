@@ -1,0 +1,22 @@
+Jessie McGarry
+Collaboration Statement: This is solely my work.
+
+1. Selection Sort
+	Big O is always O(n squared). The double for loop guarantees that for every element, we hit every other element. No special case will change this.
+
+2. Insertion Sort
+	Worst case and Average case performance are O(n squared). Interestingly, the more sorted the list is to start with, the less time it takes to sort, leading to O(n) for best case performance on a nearly sorted list.
+
+3. Radix Sort
+	The complexity of Radix sort depends on the number of digits in the
+elements to be sorted. The elements must be checked k * n times where k is the number of digits in the integer. However, this still leads to O(n) for best, worst, and average performance, because k is only a multiple. However, because of the cruel and torturous limitations on list usage, I had to scan through every element in a 2D array, forcing O(n squared) performance. 
+
+4. Merge Sort
+	Merge sort, in every case I can think of, has O(nlogn) performance.  
+My method, for SOME reason, seems to have O(n squared) performance, in every case. 
+
+5. Quicksort
+	Quicksort generally has O(nlogn) performance, which holds true for my method. The only way this could change is if the list is already sorted, the random pivot happens to be the first element in the array every time. The odds of this happening are extremely low, though it could happen. So, best and average : O(nlogn) ; Worst : O(n squared)
+
+
+By far, the best algorithm was quicksort, averaging under a millisecond for a five thousand element list. Merge Sort should have had times similar to this, but actually ended up having the worst running time. Radix, Insertion, and Selection sorts all took the middle spots, with similar running times.

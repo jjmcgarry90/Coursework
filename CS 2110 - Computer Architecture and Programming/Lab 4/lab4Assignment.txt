@@ -1,0 +1,55 @@
+======================================================================
+CS2110                          Lab #4                       Fall 2010
+======================================================================
+
+This is not a timed lab, so feel free to collaborate with your neighbors, use
+the book, and ask the TAs for explanation if you need help. When you are done,
+please submit your assignment to T-Square to get "credit" for participating.
+
+-------------------
+Part 1: Transistors
+-------------------
+Transistors are like tiny electrical switches. Logic gates (like AND gates,
+OR gates, etc.) are composed of transistors in much the same way that the
+functional units you will build later are composed of logic gates. There are
+2 types of MOS (metal-oxide semiconductors) transistors.
+
+Your job is to now build the following logic gates!
+
+Build a or gate.
+
+Note: Please follow the convention that your p-type gates are at the top of your circuit..
+
+Beware! if your output wire of your gates is a blue or red wire then your circuit is not correct
+
+B) Look at the image mystery.png what basic logic gate is this.  Can you give me a truth table for it?
+
+
+======================================
+Part 2: Decoders/Encoders/Multiplexors
+======================================
+
+a) Make a two-input decoder.
+   * How many outputs does this decoder have?
+   * What is the relationship between the number of inputs and the number of outputs of a decoder?
+
+b) Make a two-output encoder.
+   * How many inputs does this encoder have?
+   * What is the relationship between the number of inputs and the number of outputs?
+   * What can break an encoder?
+   * Does a decoder have this problem?
+
+c) Make a mux with two select lines.
+   * How many inputs does this mux have?
+   * How many outputs does this mux have?
+   * What is the relationship between the number of inputs and select lines for a mux?
+
+Create all of these circuits in a file named lab4Part2.circ
+
+------------
+Deliverables
+------------
+
+This file named lab4.txt
+lab4Part1.circ
+lab4Part2.circ

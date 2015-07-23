@@ -1,0 +1,294 @@
+================================================================================
+ CS 2110                         Homework 12                          Fall 2010
+================================================================================
+
+       This assignment is due by:
+               Day:    Wednesday, November 24, 2010
+               Time:   11:55:00 PM
+
+================================================================================
+       TURN IN THIS ASSIGNMENT ELECTRONICALLY USING T-SQUARE.
+       SUBMISSIONS WHICH ARE LATE WILL NOT BE ACCEPTED.
+================================================================================
+
+==============
+ Linked Lists
+==============
+
+(Note: If you are familiar with linked lists you may skip this section)
+
+In summary you are making a circular doubly-linked list. The advantage to
+this approach is that you don't have to deal with NULL except for the case
+where you have a empty list.
+
+ONLY IMPLEMENT THE TYPE OF LINKED LIST WE WANT!
+
+By now, you should be familiar with the concept of a linked list.
+However, we are going to be adding a couple of twists to the basic idea of
+a linked list. The assignment is to write a library for a double
+circularly linked list. They aren't that much harder than a simple linked
+list.  Here is how they work:
+
+First, let take a look at a basic linked list:
+
+  list
+  -----
+  |   |
+  | | |
+  --|--
+    |
+    V
+  --------        --------        --------        --------
+  |   |  |        |   |  |        |   |  |        |   |  |
+  | 7 | --------->| 3 | --------->| 9 | --------->| 4 | ---------> NULL
+  |   |  |        |   |  |        |   |  |        |   |  |
+  --------        --------        --------        --------
+
+ - Each node has data and a next pointer.
+ - You access the list through a pointer to the first node.
+ - Insert to front: O(1)
+ - Insert to end: O(n)
+ - Remove from front: O(1)
+ - Remove from end: O(n)
+ - Search: O(n)
+
+Let's say we want to be able to add to the end quickly. You can do this by
+keeping two pointers to the list, a head pointer and a tail pointer.
+
+  list
+  ---------
+  |   |   |
+  | | | | |
+  --|---|--
+    |   +-------------------------------------------+
+    V                                               V
+  --------        --------        --------        --------
+  |   |  |        |   |  |        |   |  |        |   |  |
+  | 7 | --------->| 3 | --------->| 9 | --------->| 4 | ---------> NULL
+  |   |  |        |   |  |        |   |  |        |   |  |
+  --------        --------        --------        --------
+
+ - Each node has data and a next pointer.
+ - You access the list through pointers to the first and last node.
+ - Insert to front: O(1)
+ - Insert to end: O(1)
+ - Remove from front: O(1)
+ - Remove from end: O(n)
+ - Search: O(n)
+
+This a bit better, but we still have to go through the whole list just to
+remove the last element. We can fix that by double linking the list. Every
+node will have both a next and a previous pointer.
+
+    list
+    ---------
+    |   |   |
+    | | | | |
+    --|---|--
+      |   +-------------------------------------------+
+      V                                               V
+    --------        --------        --------        --------
+    |   |  |------->|   |  |------->|   |  |------->|   |  |-------> NULL
+    | 7 |  |        | 3 |  |        | 9 |  |        | 4 |  |
+ +--|   |  |<-------|   |  |<-------|   |  |<-------|   |  |
+ |  --------        --------        --------        --------
+ V
+ NULL
+
+ - Each node has data, a next pointer, and a previous pointer.
+ - You access the list through pointers to the first node and last node.
+ - Insert to front: O(1)
+ - Insert to end: O(1)
+ - Remove from front: O(1)
+ - Remove from end: O(1)
+ - Search: O(n)
+
+There isn't much we can do about improving search speed in a linked list,
+but what about the two pointer access to the list. That is a bit messy for
+the user of our library. We can take advantage of the double links to make
+it cleaner:
+
+      list
+      -----
+      |   |
+      | | |
+      --|--
+        | +-------------------------------------------------------+
+        V V                                                       |
+      --------        --------        --------        --------    |
+      |   |  |------->|   |  |------->|   |  |------->|   |  |----+
+      | 7 |  |        | 3 |  |        | 9 |  |        | 4 |  |
+   +--|   |  |<-------|   |  |<-------|   |  |<-------|   |  |
+   |  --------        --------        --------        -------- |
+^ +---------------------------------------------------+
+
+ - Each node has data, a next pointer, and a previous pointer.
+ - You access the list through a pointer to the first node.
+ - Insert to front: O(1)
+ - Insert to end: O(1)
+ - Remove from front: O(1)
+ - Remove from end: O(1)
+ - Search: O(n)
+
+Now, by convention, the "first" node is the node that list points to, and
+the "last" node is the previous of the first node. Note that the linked
+list doesn't have _any_ pointers to NULL (think about a lone node).
+
+This is the kind of linked list that you will implement. DO NOT IMPLEMENT
+ANY OTHER TYPE.
+
+==============
+ Deliverables
+==============
+This homework will have three parts:
+
+================
+ Part 1: list.h
+================
+The first thing you should do is look at list.h.  The struct definitions for
+lnode and llist are not quite complete.  Finish them based on the comments
+provided.
+
+And the typedefs for list_op and compare_op need to be defined by you.
+
+================
+ Part 2: list.c
+================
+The next part of the assignment is list.c.  We've provided you with
+function headers to all the linked list functions we would like you to
+implement.  Implement these functions in list.c.
+
+
+Function Pointers:
+If you'll look closely at the files we've provided you, some functions
+take in pointers to functions as parameters. This is no mistake (so don't
+change what we've given you!), this is where the concept of function
+pointers comes into play. You will be using what you've learned about
+function pointers in class to manage this portion of the homework. To
+briefly put into perspective what you should be doing, take a look at this
+line in list.c:
+
+int remove_front(llist* list, list_op free_func)
+
+Since you're removing the front node of your list, this function needs to
+know the list to cut the head off of (represented by our parameter, list)
+and it needs to know how to free the memory that was allocated to that
+specific node (parameter free_func).
+
+Remember, the responsibility of freeing the memory allocated to the front
+node falls upon free_func, not the remove_front function! The only thing
+remove_front should be doing is utilizing free_func, it should not be
+attempting to manage and manipulate memory in order to free the node.
+Also, you'll notice free_func is a list_op.
+
+
+A few hints:
+
+-Never leave dangling pointers.  If you remove a node, remember to fix up the
+ pointers on its neighbors so they point to the right spots.
+-Always keep track of where your pointers are pointing.
+-There is plenty of linked list documentation on the web.  Utilize it if you
+ need some more help.
+-Be very careful to handle special cases, such as removing the only node in the
+ linked list.
+
+=============================================
+ Part 3: testing (TEST functions and test.c)
+=============================================
+
+Data structures in C must be tested with all those pointers flying
+everywhere, it's hard to get them right the first time.  For this reason,
+we are making it mandatory for you to test your code.
+
+We have provided you with a file called test.c with which to test your
+code. It contains multiple test cases, all of which create, destroy,
+and/or modify a linked list.
+
+Printing out the contents of your structures can't catch all logical and
+memory errors, so we also require you run your code through valgrind.  If
+you need help with debugging then there is a C debugger called gdb that
+will help point out problems. A tutorial with examples of using these
+debuggers is included in this assignment in the "debugging" folder. We
+certainly will be checking for memory leaks by using valgrind, so if you
+learn how to use it, you'll catch any memory errors before we do.
+
+================================================================================
+       Turn-in Requirements
+================================================================================
+
+Turn in ALL files needed to compile and execute your code.  This includes:
+-Your test.c, list.c, and list.h.
+-Any other library files you may have used.
+-Your makefile.
+
+Remember to do the following:
+1. Fill out the contents of the two structs in list.h. They MUST be
+   defined exactly as request, otherwise you WILL lose points.
+2. Write the two function typedefs requested in list.h.
+3. Write the contents of all of the functions in list.c. Be sure to pay
+   attention to special cases. Your code should never crash, nor should it
+   leak.
+4. Write more test cases in test.c. Part of this assignment is about
+   writing test cases; if you do not add more cases in test.c, you WILL
+   lose points.
+
+*NOTE: Your test.c, list.c, and list.h files MUST compile with the
+required 2110 flags, which are: -ansi -pedantic -Wall -Werror -O2
+
+Remember, non-compiling homeworks are 0's.  So make sure you turn in
+everything you need!
+
+================================================================================
+       Additional Notes
+================================================================================
+1) The makefile has targets run-test and run-debug which runs the test
+program in release and debug modes respectively
+
+2) The makefile also has targets run-gdb run-valgrind which runs the test
+program with gdb and valgrind respectively
+
+
+In addition to the debugging folder (which btw you should definitely give
+a read) I have provided some useful debugging macros for your use
+	
+1) IF_DEBUG(statement)
+
+   Runs statement if compiled in debug mode (run-debug / run-gdb /
+run-valgrind)
+	
+	example usage
+	
+	IF_DEBUG(printf("HELLO 2110"));
+	IF_DEBUG(
+	{
+		x = 3;
+		x++;
+		x = 7;
+		x++;
+	});
+	
+2) DEBUG_PRINT(string)
+	Prints out string (in red to distinguish it) if compiled in debug mode
+	This will also print out the file and line the print occurs
+	printing goes to stderr
+	
+	DEBUG_PRINT("Hello 2110");
+	
+3) DEBUG_ASSERT(expression)
+	If compiled in debug mode if expression is false
+	The program terminates with a message and exits
+	it also tells you where the assertion failed.
+	
+	/* This will fail since 8^8 is 0 which is false*/
+	DEBUG_ASSERT(8 ^ 8);
+	/* This will pass since 8^7 is 1 which is true */
+	DEBUG_ASSERT(8 ^ 7);
+	
+
+If you find that the run-valgrind target in the makefile does not work
+then do this in a terminal: |sudo apt-get install valgrind| and then try
+again.  I found that on ubuntu 9.10 valgrind is not installed by default.
+
+If you also find that the run-gdb target in the makefile does not work
+then type this: |sudo apt-get install gdb| and then try again.
+

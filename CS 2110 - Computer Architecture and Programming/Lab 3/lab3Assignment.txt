@@ -1,0 +1,50 @@
+======================================================================
+CS2110                          Lab #3                       Fall 2010
+======================================================================
+
+Objective: To Learn about Floating Point
+
+This is not a timed lab, so feel free to collaborate with your neighbors, use
+the book, and ask the TAs for explanation if you need help. When you are done,
+please submit your assignment to T-Square to get "credit" for participating.
+
+Warning: There is a quiz at the end of this lab do not leave.
+
+
+The file floating.txt is here to help you with this lab assingment.
+
+-----------------------------
+Part 1: Floating Point Basics
+-----------------------------
+
+How are the bits laid out for the IEEE 754 floating point standard?
+
+What is the highest exponent that can be represented with the floating point type?
+
+What is the smallest exponent that can be represented with the floating point type?
+
+What is/are the problem/s with converting an int into a float?
+
+What is/are the problem/s with converting a float into an int?
+
+----------------------------------
+Part 2: Floating Point Conversions
+----------------------------------
+
+Convert the binary number in IEEE format into a float
+
+0 10000001 11011000000000000000000
+
+Conver the following float into IEEE format
+
+101.6875
+
+
+
+
+------------
+Deliverables
+------------
+
+This file named lab3.txt
+

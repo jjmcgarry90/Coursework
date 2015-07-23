@@ -1,0 +1,237 @@
+======================================================================
+CS2110                    Lab #10 (Extra)                    Fall 2010
+======================================================================
+
+So you have stumbled upon this file. Just to make sure you know whatever
+you submit for this assingment is not graded at all.
+If you ever submit something for this assignment you will get feedback
+about how well you did.
+
+You don't even have to do this whole file (though you are welcome to).
+You can get help from a friend, a TA, or the book!
+
+So the problems are classified in the following system!
+
+Mild - You all should be able to figure these out relatively quickly.
+Medium - After some thought you can be able to figure these out.
+Hot - Make take some time.
+Spicy - Will take a lot of thought (You are not required to do these).
+	May be as hard (or harder) than a homework assignment
+
+
+
+
+
+----
+Mild
+----
+
+1) Code recursive multiply.
+
+int multiply(int a, int b)
+{
+	if (b == 0)
+		return 0;
+	else
+		return a + multiply(a, b - 1);
+
+}
+
+Specifications
+-------------
+Preconditions:
+R0 contains A
+R1 contains B
+
+Postconditions:
+R0 still contains A
+R1 still contains B
+R2 contains A * B
+No registers are trashed
+
+Constraints:
+R0 and R1 are both positive
+
+
+
+
+2) Debugging! what is wrong with the following assembly program?
+Note this program is very trivial thats not the problem
+
+SUB_UNKNOWN
+ADD R6, R6, #-1
+STR R1, R6, #0
+
+ADD R0, R0, #0
+BRZ BASE_CASE
+ADD R0, R0, #-1
+JSR SUB_UNKNOWN
+ADD R0, R0, #1
+
+BASE_CASE
+LDR R1, R6, #0
+ADD R6, R6, #1
+RET
+
+
+
+
+
+3) Debugging What is wrong with this recursive assembly program (there may be more than one problem) ?
+
+; I use R0 as the parameter to this subroutine
+SUB_UNKNOWN2
+ADD R1, R7, #0
+ADD R0, R0, #0
+BRZ BASE_CASE
+BRNZP SUB_UNKNOWN2
+OUT
+ADD R0, R0, #-16
+BASE_CASE
+ADD R7, R1, #0
+RET
+
+
+
+
+
+------
+Medium
+------
+1) Code recursive power. (you may use multiply that you just wrote for this)
+
+Specifications
+-------------
+Preconditions:
+R0 contains A
+R1 contains B
+
+Postconditions:
+R0 still contains A
+R1 still contains B
+R2 contains A ** B (A to the power of B)
+No registers are trashed
+
+Constraints:
+R0 and R1 are both positive
+
+Notes:
+In the case of 0^0 just return 1
+
+
+
+
+
+2) Code this in a recursive subroutine
+
+This function is named Brandonacci.
+
+int brandonacci(int n)
+{
+  if (n <= 1)
+    return 1;
+  else
+    return 2 * brandonacci(n - 2) + brandonacci(n - 5)
+}
+
+Specifications
+-------------
+Preconditions:
+R0 contains N
+
+Postconditions:
+R0 still contains N
+R1 still contains brandonacci(N)
+No registers are trashed
+
+
+Note:
+brandonacci(0) = 1
+brandonacci(1) = 1
+brandonacci(2) = 2 * brandonacci(0) + brandonacci(-3) = 3
+brandonacci(3) = 2 * brandonacci(1) + brandonacci(-2) = 3
+brandonacci(4) = 2 * brandonacci(2) + brandonacci(-1) = 7
+brandonacci(5) = 2 * brandonacci(3) + brandonacci(0) = 7
+brandonacci(6) = 2 * brandonacci(4) + brandonacci(1) = 15
+brandonacci(7) = 2 * brandonacci(5) + brandonacci(2) = 17
+brandonacci(8) = 2 * brandonacci(6) + brandonacci(3) = 33
+...
+
+
+
+
+---
+Hot
+---
+1) Code isPalindrome using recursive assembly
+
+java pseudocode
+int isPalindrome(String str, int l, int r)
+{
+    if (str.charAt(l) != str.charAt(r))
+			return 0;
+		else if (l + 1 > r - 1)
+      return 1;
+    else
+			return isPalidrome(str, l + 1, r - 1);
+}
+
+And more importantly the C version
+int isPalindrome(const char* str, int l, int r)
+{
+		if (str[l] != str[r])
+			return 0;
+		else if (l + 1 > r - 1)
+			return 1;
+		else
+			return isPalindrome(str, l, r);
+}
+
+Specifications
+-------------
+Preconditions:
+The string is somewhere in memory (use .stringz)
+
+Postconditions:
+Come up with these on your own! But make sure you tell me this in your code
+No registers are trashed
+
+
+
+
+
+
+2) With that token code a recursive algorithm to reverse a string
+
+mix of Java + C pseudocode
+
+char* reverse(const char* toReverse)
+{
+		if (toReverse[0] == 0)
+			return ""
+		else
+			return reverse(toReverse + 1) + toReverse[0] 
+}
+
+Specifications
+-------------
+Preconditions:
+The string is somewhere in memory (use .stringz)
+
+Postconditions:
+The reversed string is somewhere else in memory (choose a location and put this in a comment in your code)
+No registers are trashed
+
+
+
+
+
+-----
+Spicy
+-----
+
+1) Code McCarthy 91
+	http://en.wikipedia.org/wiki/McCarthy_91_function
+
+2) Code Ackermann
+	http://en.wikipedia.org/wiki/Ackermann_function

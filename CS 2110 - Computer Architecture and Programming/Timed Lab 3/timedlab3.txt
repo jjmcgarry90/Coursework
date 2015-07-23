@@ -1,0 +1,170 @@
+=======================================================================
+CS 2110                      Timed Lab #3                   Fall 2010
+=======================================================================
+
+   This assignment is due by:
+         Day:    Wednesday, October 27, 2010
+         Time:   Before the end of lab (4:25pm/5:55pm) (NOT 11:55PM)
+         
+=======================================================================
+      TURN IN THIS ASSIGNMENT ELECTRONICALLY USING T-SQUARE.  
+         SUBMISSIONS WHICH ARE LATE WILL NOT BE ACCEPTED.
+=======================================================================
+
+
+================
+Your Assignment:
+================
+
+Your assignment is to write a recursive subroutine that will just print
+out a number digit by digit starting at the most significant digit
+and working on downward.
+
+For instance you if have 32767
+First the 3 gets printed then 2, then 7, then 6, and lastly, 7 in this order!
+
+Do not handle negative numbers!
+The only valid inputs to your subroutine (and the only values we will test) is 0 - 32767.
+
+===========
+Pseudocode:
+===========
+
+Your code MUST follow this pseudocode.
+
+int display(int n)
+{
+   int numchars;
+   // If n is less than 10 i.e. it is only one character
+   if (n < 10)
+   {
+   	  // Print it
+      printNum(n);
+      // Only one character was printed here.
+      return 1;
+   }
+   // Display n / 10
+   numchars = display(n / 10);
+   // Print Least Significant Digit
+   printNum(n % 10);
+   // We printed out one more character.
+   return numchars + 1;
+}
+
+void printNum(char c)
+{
+	 // OUT IS A TRAP! IT WILL PRINT OUT THE CHARACTER IN R0
+   OUT(c + 48);
+}
+
+As a note for printNum you will be calling a TRAP called OUT.
+Just like HALT to use it you can just say OUT in your code!
+What OUT does is that it takes the value stored in R0 and
+prints it out to the console. 
+  
+printNum will ONLY be passed a number from 0 to 9 to convert
+this into an ASCII character you add 48 to this number. If when you call printNum
+and the number is greater than 9 then you are doing it wrong!
+  
+===============
+Specifications:
+===============
+
+DISPLAY
+-------
+Preconditions:
+R0 contains n, the number you want to print
+
+Postconditions:
+R0 is unchanged. It still contains in.
+R2 contains numchars, the number of characters that was printed
+NO OTHER REGISTERS ARE TRASHED (you will lose points if any register is trashed)
+The number contained in R0 is printed to the LC3 Console.
+
+
+PRINTNUM
+--------
+Preconditions:
+R0 contains c the number you want to print (0-9)
+
+Postconditions:
+R0 still contains c
+The character ('0'-'9') is printed to the LC3 Console
+Again no registers are trashed.
+
+
+=============
+Restrictions: 
+=============
+
+   1. Your display function must be a RECURSIVE subroutine.
+      Any iterative solution will be heavily penalized.
+   2. Your printNum function MUST be a subroutine.
+   3. Follow the comments in the template file.
+      In MAIN there are three comments this translates to exactly 4 assembly
+      instructions.  This is all you need.  TIP! If you have to use more than
+      4 then you are doing it wrong!
+   4. Your subroutines may not trash any registers.
+   5. Your code must not generate any warnings.
+   6. Do not modify the code for the UDIV subroutine. Yes, this code does work.
+   7. In addition do not modify any of the labels in the code, follow the template given!
+   8. Your DISPLAY subroutine should be called display and you should call this through MAIN
+   		Calling any other subroutine will make you lose points.
+   
+  
+
+=====
+Tips:
+=====
+	1. Comment your code in the case where it does not work.  Partial credit will be given for code that almost works.  This is to let us know your thought process.
+	2. We do not grade commented code.
+	3. Ensure that your SUBROUTINES do not trash any registers
+	   How we will test your code is we will be calling both of your subroutines DIRECTLY that is the grader puts random values in all of your registers
+	   calls your subroutine
+	   and then checks to see if any register has changed.
+	4. Make sure you adhere to the specifications of both subroutines.  You may only assume the preconditions have been met before your subroutine is called.
+
+=================
+Timed Lab Policy:
+=================
+
+Questions: If you are unsure of what questions mean, the TA's will clarify them 
+    to the best of their ability. We will not be able to answer any questions about
+    how to reach a solution to the lab questions. For example, we can't answer the 
+    question "How do I call a subroutine?" (that's what we're asking you), but we can
+    answer questions like "In which register should I put my return value?" or 
+    "Can I use the included UDIV subroutine?"
+
+* You may use any of the following resources:
+     - The assignment files (timedlab3.txt, timedlab3.asm, PattPatelAppA.pdf)
+     - simpl, Complx, simp, lc3as to compile/test your code
+     - Any text editor (We recommend that you use gedit)
+     - Your mind
+     - Blank paper for scratch work
+
+* You may NOT use: 
+     - The Internet (except the T-Square Assignment page)
+     - Any files that you or anyone else has previously written (no home drive,
+            no previous T-Square submissions, NO existing files you can access)
+     - Textbook
+     - Notes
+     - Email
+     - IM
+     - Contact with any other person besides TAs
+                   
+* Failure to follow these rules will be in violation of the Georgia Tech Honor
+  Code. AND YOU WILL RECIEVE A ZERO!
+
+*YOU MUST SUBMIT BY THE END OF YOUR LAB PERIOD. Bear in mind that the clock on your computer 
+may be a few minutes slow. T-Square has the multiple submissions option so don't be afraid 
+to resubmit if you fix something. You are supposed to have a full class period to work, and 
+we are letting you use the 10 minutes between classes to make sure you have submitted your work. 
+WE WILL NOT ACCEPT LATE SUBMISSIONS, be they 1 second or 1 hour late. 
+
+
+===========
+Submission:
+===========
+
+Submit your modified version of the assembly skeleton file named "timedlab3.asm"
+to T-Square before the end of the lab period.

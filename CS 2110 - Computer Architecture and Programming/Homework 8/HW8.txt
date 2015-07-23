@@ -1,0 +1,131 @@
+===============================================================================
+CS-2110                           Homework 08                         Fall 2010
+===============================================================================
+
+This assignment is due by:
+	Day:	Tuesday, October 26, 2010
+	Time:	11:55:00 PM
+
+===============================================================================
+			TURN IN THIS ASSIGNMENT ELECTRONICALLY USING T-SQUARE.
+				LATE SUBMISSIONS WILL NOT BE ACCEPTED.
+===============================================================================
+
+======================================
+Preparation: Learn the GBA Environment
+======================================
+As an additional resource we have included a file called VBAHowTo.txt. This file
+contains instructions on setting up and using ham, which is our GBA environment.
+
+You will also need to be somewhat familiar with makefiles.
+You can also find more information about makefiles in the makeTutorial.txt file 
+located here:
+T-Square > CS-2110 > Resources > Technical Resources > Tutorials/Environment Setup > Make/Makefiles
+
+========================================
+Part 1: Create a GBA Library Files
+========================================
+
+The next step is to start coding C! The first thing we are going to do is
+create files that can then later be used as a library for GBA programs. They
+will contain all the basic functions and declarations that are common in normal
+GBA programs. The point of this part of the assignment is to get you to create
+files that contain everything you need to create a game boy game other than
+the game code itself. If you want to write a new game, you can just use your
+myLib.c and myLib.h files and fill in the unique code that pertains only to
+your new game in a new file's main().
+
+***NOTE!!************************************************************************
+You will need to submit both these and your hw8.c file (part 2) to get full credit.
+*********************************************************************************
+
+Using a text editor of your choice, create a file called
+myLib.h and add the following elements to the file:
+
+Declarations:
+ - REG_DISPCNT - The display control register, located at 0x4000000
+ - u16 - An unsigned short type, used to represent memory locations in the GBA.
+ 	(this should be a typedef)
+ - RGB - A macro you should #define at the beginning of your file.  This macro
+         takes three integers representing the red, green and blue components
+         of the color and returns the corresponding color value.
+
+Using a text editor of your choice, create a file called
+myLib.c and add the following elements to the file:
+
+Declarations:
+ - myLib.h - you need to include the myLib.h header file.
+ - videoBuffer - The video buffer, located at 0x6000000
+Functions:
+       NOTE: None of these functions should be empty.
+ - void setPixel(int r, int c, u16 color) {
+                 A function to set pixel (r, c) to the color in the parameter.
+   }
+ - void drawRect(int r, int c, int width, int height, u16 color) {
+                A function to draw a rectangle starting at (r, c)
+   }
+
+You will need to put a line of code in myLib.h that will make the videoBuffer in
+myLib.c visible to your main program file, in the case of this homework hw8.c
+(hint: look up extern).
+
+We will go over a lot of these functions and declarations in lab (although
+we recommend that you start before then, since you have also gone over most, if not
+all, of them in lecture).  After building these files, you now have a fully functional
+library. To test them out we will now create another program using it.
+
+As you progress through the semester, you may find it useful to update and extend
+these files or create a new, similar file, because you will be reusing a number
+of functions, registers, and structures during the C part of this course.
+
+This is why we have you create this library.
+If you do well on creating this file the actual amount of coding you will do for the
+next few homework assignments should be significantly easier.
+
+=============================================
+Part 2: Light A Few Pixels
+=============================================
+
+Create a new file named "hw8.c". 
+
+Declarations:
+ - myLib.h - you need to include the myLib.h header file.
+Functions:
+ - int main() {
+ 		Your main function.  Within this you should setup REG_DISPCNT
+		and put your game loop.
+   }
+
+Add game code to hw8.c to create a basic GBA program that lights a few pixels.
+This program should do the following:
+
+	Light up at least 5 pixels in any pattern you want using at least 4
+	different colors and the setPixel command. Use your creativity!
+
+It is advised that you go above and beyond on this homework (feel free to research and implement more features in your gba program.)
+A nice/easy thing to add would be button input and or images. The more you do for this homework the better off you will be in future assignments!
+
+For the next assignment(s) you will be creating games for the GBA
+
+In addition the best submissions for these next few assignments will be put in the hall of fame!
+
+To run your program, you'll have to modify the included makefile.  If you are
+not sure what to modify, go back and reread VBAHowTo.txt.
+If everything is correct, you should be able to type
+
+make vba
+
+and see your program.
+
+===========
+Submission:
+===========
+Turn in all the files you have created and modified.  This will include:
+   - myLib.h
+   - myLib.c
+   - hw8.c
+   - makefile
+
+Also note:
+   - If you do not submit your modified makefile, your code will not compile and you
+     will get a zero

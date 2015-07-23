@@ -1,0 +1,40 @@
+==================================================================================================================
+CS2110                                             Lab #14                                               Fall 2010
+==================================================================================================================
+
+Objective: Learning about the basics of C and pointers and make
+
+Don't hesitate to ask the TA's for help. If you are stuck on
+one part, or not clear about what it's asking, feel free to
+ask. Remember, we are here to help you :)
+
+This is not a timed lab so talk with your friends, use the book, use a TA, etc.
+
+Make
+----
+1) What is make?
+
+MACROS I
+--------
+1) Create a macro that performs the absolute value of a number pass in.  You may not use 
+any built-in library function. (Hint: Remember the conditional operator ? : 
+Example usage (x < 5) ? y = 2 : y = 7;  if x is less than 5 then set y to 2 else set y to 7.)
+
+2) Create a macro that converts a number from Celcius to Fahrenheit.
+
+3) What is wrong with the following macro declaration? Think about what the preprocessor does to #define's
+
+#define TIMESTWO(x) x + x
+
+Give examples of where this will fail!
+
+
+POINTERS I
+----------
+1) Declare a pointer to an integer that initially points to address 0xBAAABEEF
+
+2) Declare a pointer to a short that initially points to address 0x0CABCAFE
+
+3) Define the term dereference. 
+
+4) What is meant by the term pointer arithmetic?

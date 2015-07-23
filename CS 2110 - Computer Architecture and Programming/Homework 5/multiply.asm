@@ -1,0 +1,17 @@
+.orig x3000
+
+
+LD R0,OP1
+LD R1,OP2
+AND R2,R2,0
+loop ADD R2,R2,R0
+ADD R1,R1,-1
+BRp loop
+ST R2, ANSWER
+
+HALT
+
+OP1 .fill 5
+OP2 .fill 2
+ANSWER
+.end

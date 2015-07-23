@@ -1,0 +1,141 @@
+Jessie McGarry
+
+
+Part I:
+
+A.
+Application:
+Responsible for supporting network-based applications.
+A variety of protocols may be employed in this layer such as HTTP,
+SMTP, and FTP. These protocols provide a common language for
+application level entities.
+
+Transport:
+Responsible for taking an application layer message and
+transporting it between the ends of communication. Deals with
+breaking a message into packets and out of order delivery of
+packets. Uses TCP and UDP.
+
+Network:
+On the sending side, given a packet from the transport layer, the
+network layer finds a way to get the packet to the intended
+destination address. On the receiving side, the network layer passes
+the packet up to the transport layer, which collates the packet into
+the message to be passed to the application layer.
+
+Link:
+When fragments are passed to the link layer from the network layer,
+the link layer delivers them to the next hop, where they are
+passed back up to the network layer. Uses the protocols Ethernet,
+Token Ring, and IEEE 802.11.
+
+Physical:
+Responsible for physically (electrically, optically, etc.) moving
+the bits of the packet from one node to the next. Intimately tied to
+the link layer.
+
+
+Part II:
+
+A.
+
+header = 16B
+payload = 32B
+message size = 1024B
+packet size = header + payload = 48B
+
+#packets = message / payload
+1024 / 32 = 32 packets
+
+total bytes = #packets * packet size
+48B * 32 packets = 1536B sent
+
+
+B.
+
+Transmission time = sender overhead + transmission delay + time of flight + receiver delay
+
+transmission delay = message size/wire bandwith
+				= 10000b/(16x10^6) = 6.67x10^-4
+				
+transmission time = (200x10^-6) + (6.67x10^-4) + (25x10^-3) + (200x10^-6)
+				= .026 sec
+				
+throughput = message size/transmission time
+		= 10000b/.026sec
+		= 383,626.81 b/sec
+
+
+
+Part III:
+
+A. Sequence number
+
+B.
+The ntohl() function converts the unsigned integer netlong from network byte order to host byte order.
+
+The htonl() function converts the unsigned integer hostlong from host byte order to network byte order.
+
+The endianness of the data must match that of its current location. Otherwise, the data will be invalid.
+
+C.
+Linux (x86): little-endian
+SPARC: bi-endian(either)
+Windows (x86): little-endian
+Java Virtual Machine: big-endian
+Network Order: big-endian
+
+
+
+Part IV:
+
+A.
+NIC (Network Interface card):
+A peripheral controller to connect a computer to a network.
+Corresponds to the link layer
+
+Hub:
+Connects computers together to form a single collision domain, serving
+as a multi-port repeater. Corresponds to the physical layer.
+
+Repeater:
+Boosts the signal strength on an incoming port and faithfully reproduces
+the bit stream on an outgoing port(for LANs and WANs). Corresponds to the physical layer.
+
+Bridge:
+Connects independent collision domains, isolating them from one
+another. Usually uses 2-4 ports and MAC addresses to direct a message on an incoming
+port to an outgoing port Corresponds to the link layer.
+
+Switch:
+Similar to a bridge but supports several ports (usually 4-32). The switch provides
+expanded capabilities to dynamically configure and group computers connected to
+the switch fabric into VLANs. Corresponds to the link layer.
+
+Router:
+Basically a switch but has expanded capabilities to route a message
+from the LAN to the Internet. Corresponds to the network layer.
+
+
+
+Part V:
+
+A.
+Ethernet is a random access protocol, that has opportunistic broadcast using CSMA/CD with
+exponential backoff on collision. What this means is that multiple stations that need to transmit
+will sense the idleness of the medium they are transmitting on. If the medium is not idle,
+then the station will wait. The transmitting station will listen for a collision, meaning that another
+system simultaneously attempted to transmit. When a collision is detected, the station will
+cease transmission, sending a noise burst to alert other stations of the collision. The station will then wait a random amount of time before attempting transmission. This random waiting interval increases exponentially with the number of collisions experienced during a transmission, hence the exponential backoff.
+
+
+B.
+CSMA/CD was outlined in part a. CSMA/CA solves the problem of multiple stations not being able
+to detect other stations' transmission. The station can send a request to sent (RTS) packet to the destination, and will not begin transmission until a clear to send (CTS) packet is received from the destination. CSMA/CA is a viable option for wireless networks, where stations cannot necessarily detect transmission from other stations. With CSMA/CA, collision of transmission can be avoided.
+
+
+C.
+RTS/CTS is used in collision avoidance when stations are not able to detect the transmission of
+other stations. An RTS (request to send) packet can be sent to the destination, and transmission can
+begin once a CTS (clear to send) packet is received from the destination.
+

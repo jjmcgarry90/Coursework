@@ -1,0 +1,132 @@
+How to use the VBA toolchain for Linux, version 4.0
+==================================================================
+* created by Megan Elmore
+* revised by Chris Sladky to reflect States machines now having
+*                         ham in the .bashrc by default
+* revised by Christina O'Neill 10/14/2009
+*            Download/install instructions have changed
+*               - www.ngine.de no longer carries ham for linux
+*               - Joshua Cranmer created a new installation tutorial
+*            Makefile information has changed
+*               - Joshua Cranmer condensed the 3 ham makefiles into
+*                 a single makefile that is very short and easy to follow
+*            T-Square resources have been re-organized
+*               - Added new path names in 2110 resources
+* revised by Joshua Cranmer 03/08/2010
+*            Toolchain has been heavily overhauled and modernized
+* 
+* revised by Brandon Whitehead 06/23/2010
+*						Updated Resource directories.       
+==================================================================
+ 
+ 
+About the environment
+---------------------
+ 
+The VBA toolchain is set up by default in on the States lab machines; it
+will also work on ara and the ssh (cc-[space shuttle]) servers. To run it
+on your own machine or a machine outside of the CoC, see the instructions
+below.
+ 
+The tools are installed at /usr/local/cs2110-tools; if this directory does
+not exist on your computer, you will need to install them as follows below.
+Previous semesters used an older version which located files at
+/usr/local/ham-271-linux-full; such programs may not work on TA's grading
+machines, so please use the newer tools.
+ 
+Installing onto your own Linux machine
+--------------------------------------
+All the files and information you need in order to getting the toolchain
+working on your own linux machine are in the Resources on T-Square.
+ 
+Go-to:
+T-Square > CS-2110 > Resources > GBA
+ 
+Follow the instructions listed under "GBA tools installation instructions."
+Essentially, you need to download one of the cs2110-tools packages:
+ 
+32-bit Ubuntu or other Debian-based system: cs2110-tools_1.0-1_i386.deb
+64-bit Ubuntu or other Debian-based system: cs2110-tools_1.0-1_amd64.deb
+ 
+32-bit other Linux distribution: cs2110-tools-32bit.tar.bz2
+64-bit other Linux distribution: cs2110-tools-64bit.tar.bz2
+ 
+Building from source: cs2110-tools-src.tar.gz
+ 
+Another place you may want to look for additional info is:
+T-Square > CS-2110 > Resources > GBA
+There are some great informational files in that folder too.
+ 
+ 
+Building and running GBA programs using make
+--------------------------------------------
+make is a wonderful utility that reads makefiles, or lists of rules you
+define about when a target (executable binary, output file, etc.) should
+be created/compiled/executed/whatever. We have an excellent tutorial on
+make (check CS2110 Resources on T-Square:
+T-Square > CS-2110 > Resources > GBA)
+ 
+We have provided you with a makefile shell that you can use to compile,
+build, or run all your GBA programs in this class. It handles most of the
+targets you want to use, contains many variables that you need to specify
+a build path, and contains rules for the desired targets.
+ 
+A sample:
+all (default): Compiles your code and creates the GBA output file
+ 
+vba: Builds your files and runs the emulator
+ 
+clean: Removes temporary build files and the GBA output file
+ 
+*.o: Compiles any file with the extension .c to make the corresponding
+     object file.
+ 
+You will need this makefile in the directory that holds your code files,
+and you will need to edit the first section of the makefile to include the
+program name of the project you are building and the list of object files
+(compiled c files) needed to build the project.
+ 
+What to edit:
+   First, state the name of your program. This can be almost anything
+   you want, but usually is the name of your main code file without
+   the ".c" extension. For example, the majority of my code is in hw8.c,
+   so I would set my program name to be "hw8". At the top of the makefile,
+   you will see the following two lines of code:
+   
+   # The name of your desired GBA image
+   PROGNAME =
+   
+   I would change them so that they look like this:
+   
+   # The name of your desired GBA image
+   PROGNAME = hw8
+ 
+   Now, you need to specify which C files need to be compiled. This is
+   done by listing the .o files you want to see when the program is built.
+   Since hw8.c is the only code file in this example, I would edit the
+   next two lines in the makefile to look like this:
+   
+   # The object files you want to compile into your program
+   OFILES   = hw8.o
+ 
+ 
+The next section of the makefile is a set of variables that is used for
+the targets for the GBA build code. This is what each variable means:
+ 
+TOOLDIR:  The location of the directory that contains the build tools.
+CFLAGS:   Some more flags that are useful for the compiler. Read the gcc
+          man page if you wish to know what these actually do.
+LDFLAGS:  Flags for the linker. This mostly controls where all of the
+          libraries can be found and how to combine everything together.
+CC, AS, LD, OBJCOPY, GDB:
+          These are the executables that actually compile and link all of
+          the code together.
+ 
+The last part of the makefile contains all of the targets. This allows you
+to see how each individual file is made. For example, the %.o: %.c rule is
+what compiles each C file into an object file. If you wish to add more
+targets, I would recommend adding them after this section.
+ 
+If your makefile contains all these things you are probably set. Now
+make your favorite target (mine's make vba) and watch it go.
+

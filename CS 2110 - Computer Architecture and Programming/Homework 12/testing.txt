@@ -1,0 +1,128 @@
+A guide to writing test cases
+
+
+Why test?
+=========
+
+The primary purpose of writing test cases is not to prove that code is correct.
+Indeed, a famous aphorism by Dijkstra is that "Testing cannot prove the absence
+of bugs, only the presence of them." While there are techniques to prove the
+correctness of code, correctness is largely intractable for real-life programs.
+
+Instead, the purpose of tests is to increase confidence in code correctness.
+With knowledge of the implementation, and some test coverage analysis tools, it
+is possible to have enough test cases to be able to reasonably say that your
+code is correct for almost all inputs. The downside is that, to get a high
+degree of coverage, you need a large amount of tests. For comparison, the total
+size of the source code for the SpiderMonkey JavaScript engine is about 51 MB,
+of which 23 MB--nearly half!--is pure test-related code.
+
+
+An example
+==========
+
+For an example, suppose I have implemented in C an implementation of heapsort,
+and I want to be reasonably sure that it is correct. How would I test it?
+
+(For those of you who don't know what heapsort is, it is a sorting algorithm
+that involves turning the array into a data structure based on complete binary
+trees, and then extracting elements from said data structure. This is not an
+algorithm you are expected to code in this class.)
+
+void heapsort(int *array, int arr_size);
+
+The most natural thing to do for testing is to try to sort several arrays, and
+see if they are sorted correctly. For example, {6, 3, 1, 4, 2, 7, 5} appears to
+be a nice choice. It's large enough to be "interesting", and it's small enough
+to let me debug it manually to figure out why the algorithm fails.
+
+The latter point is an important one for test cases. If the test fails, you
+have to be able to figure out why it failed. You also have to figure out what
+the correct answer should be, which generally means doing it by hand for some
+problems, so overly-complicated cases are rather poor test cases to choose
+(unless you are purposefully trying to stress-test the code, but that is a
+different topic).
+
+A natural extension of this test case is to expand it to test for all 5,280
+permutations of the array. Generating all of these is a rather trivially
+automatable task (you can look it up online). As a result, I now have proof
+that my code can sort all permutations of this 7-element array, which is
+generalizable to suggest that it can handle similar things.
+
+Now, there are few flaws with this approach. First, notice that I picked the
+numbers from 1-7 to sort. It is theoretically possible that my code could be
+mixing the contents of the array with the indices, so choosing this set of
+numbers is actually a rather poor idea. Instead, a better idea is to pick
+wildly varying, non-correlative numbers. For my case, I'll choose this set:
+{0, 1, 10, -4, INT_MIN, INT_MAX, 0x10000001}
+
+These values are strategically picked to imply that accidentally using the
+values as indices or vice-versa would be immediately picked up in the results.
+
+Another flaw is that I have to consider how "typical" this result is. If I were
+to write out the heap for an array of size 7, I would notice that it forms a
+complete binary tree, which is the simplest case for a heap. It is also,
+unfortunately, of size 3, which means I could fail to properly inspect the
+entire tree. If I were to make my array of size 8, however, I start with a
+non-complete binary tree, so the algorithm has to work even harder. Since I
+don't easily know what a hard array of size 8 is, I'll just generate all 40,320
+permutations of size 8.
+
+For extra confidence, I could also include arrays of size 7, 9, 10, and even
+higher. I would have to sit down and think about what would make a harder
+instance--profiling some test cases could help me here.
+
+With all of that, I can now gain confidence that my code works for "typical"
+inputs. However, there are always edge cases to worry about. These are the
+times when the algorithm is at the edge of a condition or not, and so they are
+primarily at the extreme ends of the ranges. For heapsort, the most obvious
+edge case is an empty list, as well as lists of size 1 or 2.
+
+In general, you can find most edge cases by checking the smallest possible
+values--0, 1, or 2--and the largest possible values. Extremely "simple"
+problems, ones that require little or no work to solve, are also edge cases.
+For sorting algorithms, think about sorted lists or reverse sorted lists. If
+the problem involves bit masking, think about numbers with only one bit set or
+perhaps negative numbers as well.
+
+The other set of test cases to worry about is invalid arguments. For heapsort,
+what if I gave an array of negative size, or a NULL pointer? Generally, you
+want to test for these conditions and fail graciously (say, by doing nothing or
+returning an error code--not by rudely crashing).
+
+In summary, this is the complete set of test cases I would use:
+* NULL array, with sizes INT_MIN, -1, 0, 1, INT_MAX
+* valid array pointer, with size INT_MIN, -1, and 0
+* { 100 }
+* { 100, 200 } and { 200, 100 }
+* All permutations of { 0, 1, 10, -4, INT_MIN, INT_MAX, 0x10000001, 42 }
+* A "hard" array of size 9
+* A "hard" array of size 10
+* A "hard" array of size 300
+
+
+General techniques
+==================
+
+Testing, like debugging, is most effective with detailed knowledge of the
+implementation. As such, most techniques are specific to the programming being
+tested. However, there are some general guidelines that can be followed.
+
+At a high level, there are basically two categories of tests: tests that check
+whether or not your code paths are correct, and tests that check if you need
+to add new code paths.
+
+Basic rules of thumb:
+
+1. Tests must be reproducible. Since the purpose of testing is to see if your
+program has bugs, you need to be able to fix any bugs that the test shows.
+Logically, you need to be able to debug the test failures. In other words,
+don't use random number generators in your test code.
+
+2. Individual test cases should be generally simple. As above, part of the
+purpose of testing is to be able to fix bugs you find, so the test cases should
+be simple enough to be debuggable.
+
+3. Always test edge cases. These vary from algorithm to algorithm, but numbers
+around 0 (e.g., 1, -1, perhaps 2) tend to be special cases. Testing the extreme
+ends of the input range (e.g., 2^31 - 1) is also a good candidate.

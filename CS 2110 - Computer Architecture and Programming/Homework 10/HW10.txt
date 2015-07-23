@@ -1,0 +1,147 @@
+===============================================================================
+CS-2110                           Homework 10                         Fall 2010
+===============================================================================
+
+This assignment is due by:
+	Day:	Thursday, November 11th, 2010
+	Time:	11:55:00 PM
+
+===============================================================================
+	TURN IN THIS ASSIGNMENT ELECTRONICALLY USING T-SQUARE.
+	LATE SUBMISSIONS WILL NOT BE ACCEPTED.
+===============================================================================
+
+=========
+Overview:
+=========
+For this assignment, you will writing another Gameboy game, 
+this time in mode 4. You may build a new game or you may convert 
+your previous mode 3 game to mode 4. Mode 4 introduces the
+technique of page flipping; be sure to understand how page
+flipping works and utilize it in your game.
+
+=============
+Requirements:
+=============
+0) YOU MAY NOT USE MODE3 FOR THIS ASSIGNMENT. ANY SUBMISSIONS USING MODE3 WILL RECEIVE A ZERO!
+1) You may convert your mode3 game from the last assignment into mode4
+2) You must use mode4 for this assignment.
+3) Write a function called setPalette which uses DMA to set the Palette.
+4) Animated Images or a Graphical Effect.
+5) Text using our text.c and text.h from HW9
+6) Bounds Checking
+7) Collision Detection
+8) use of buttons and input
+9) clear win/lose condition or infinite levels
+10) title screen
+11) win/lose screen
+12) way to reset the game 
+13) Finished versions of the DMA Problems we give you.
+
+Define functions in your main file (the file that implements main):
+initialize() -responsible for setting up the game (put the player at the starting position and setting the palette).
+clear() - responsible for clearing the screen
+update() - responsible for doing the game logic calculations i.e. button input moving enemies etc.
+draw() - responsible for drawing all objects on the screen.
+
+
+Your main should look like so.
+
+int main(void)
+{
+        /* Set up REG_DISPCNT */
+        initialize();
+        while(1)
+        {
+                waitForVBlank();
+		flipPage()
+                clear();
+                update();
+                draw();
+        }
+        
+        return 0;
+}
+
+
+================
+Animated Images:
+================
+For this assignment you will be implementing some form of animated images or graphical effect in your game.
+
+The easiest way to implement an animated image is simply for each frame (or every few
+frames) of your game loop to change the image you are drawing. It is exactly like a flip
+book where you change the image slightly every couple of frames.
+
+You are free to implement this however way you want, but here is how I would go about this:
+
+Create a struct called Animation. It will contain data for:
+	1. the current frame
+	2. the maximum number of frames
+	3. the delay (the number of frames that must pass before the animation updates the image)
+	4. a counter
+	5. an array containing pointers to images (remember that an image is a const u16 pointer)
+
+And then have functions for the following:
+
+	void updateAnimation(Animation* anim);
+	void drawAnimation(Animation* anim);
+
+In updateAnimation you will:
+
+	1.Increment the counter
+	2.You then check if the counter is >= the delay
+	3.If it is reset the counter then increment the current frame (reset back to 0 if it's > max frames)
+
+In drawAnimation all you have to do is call drawImage4 with the correct frame of the image.
+
+ Notes
+----------
+Please follow C style conventions i.e.
+
+1) do not jam all of your code into one function
+2) split your code into multiple files (have all of your game logic in your main file, library functions in myLib.c, etc)
+3) comment your code, comment what each function does. The better your code is the better your grade.
+
+The better your game the better your grade.  The best games will be put into the hall of fame.
+This means an unplayable game where the graphics are glitchy buttons do not work will get a lower
+score than a game that works and is fun.
+
+However do not try to recreate World of Warcraft for this assignment don't be too ambitious.
+
+=============
+DMA PROBLEMS:
+=============
+You will notice that we have provided you with a zip file containing a
+myLib.c, a myLib.h, a main.c, and a Makefile. Please note, you will be
+turning a modified version of this zipfile in with your homework.
+
+Examine the files in the zip file; you will be asked to code some of
+the functions within them (specific insturctions are in the comments).
+Please note, this portion will be mode 3, do not change it to mode 4.
+
+When you submit your files, submit your mode 4 game files normally as you did before, but put DMA Problems found in a zip file and turn it in with your homework.
+
+
+
+===========
+Submission:
+===========
+Turn in all the files you have created and modified.  This will include:
+   - Zip file containing finished your versions of the DMA problems(including the Makefile!)
+   - Mode 4 game makefile
+   - and any files needed to compile your game
+
+If your code does not compile, you will receive a ZERO on this assignment.
+
+Also note:
+   - If you do not submit your modified makefile, your code will not compile and you
+     will get a zero
+   - This assignment WILL be graded by demo so watch out for the demo sign up page to
+     appear and sign up early
+   - If you do not attend your demo or do not sign up for a demo, you will get a zero
+     on this assignment.
+   - You may only reschedule or cancel your demo appointment at least 24 hours in advance of the demo
+   - It's a good idea to redownload and recompile your code once you've submitted it to t-square to make sure that it works
+
+

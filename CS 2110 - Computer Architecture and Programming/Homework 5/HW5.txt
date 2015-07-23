@@ -1,0 +1,50 @@
+Name: Jessie McGarry
+T-Square Login: jmcgarry3	
+GTID: 902616371
+
+Part I
+----------------------------------------------------
+1) Program Counter
+2) The address of the next instruction to be executed
+3) Instruction Register
+4) The value of the current instruction
+5) 15, and there are different cases for certain opcodes
+6) 2^16 locations
+7) 16 bits
+8) 8
+9) The three bits that tell whether a number is negative
+   (100), zero(010), or positive(001)
+10) Each time one of the general purpose registers is written
+11) BR (conditional branch)
+
+Part 2
+----------------------------------------------------
+1)SRC2MUX=SRC,ALUK=ADD,GateALU,LDREG,LDCC
+2)SRC2MUX=SEXT,ALUK=ADD,GateALU,LDREG,LDCC
+3)ADDR1MUX=BaseR,ADDR2MUX=[5:0],MARMUX=ADDER,GateMARMUX,LDMAR;
+   MEMWE=LD,MIOEN=MEM,LDMDR ; GateMDR,LDREG,LDCC
+4)ADDR1MUX=PC,ADDR2MUX=[8:0],PCMUX=ADDER,LDPC ; PCMUX=PC+1,LDPC;
+   GatePC,LDREG,LDCC
+5)ADDR1MUX=PC,ADDR2MUX=[8:0],PCMUX=ADDER,LDPC; PCMUX=PC+1,LDPC;
+   GatePC,LDMAR ; MEMWE=LD, MIOEN=MEM,LDMDR;
+   GateMDR,LDREG,LDCC
+6)ADDR1MUX=PC,ADDR2MUX=[8:0],PCMUX=ADDER,LDPC; PCMUX = PC+1,LDPC;
+   GatePC,LDMAR ; MEMWE=ST, GateMDR,LDMAR ; MEMWE=LD,MIOEN=MEM,LDMDR;
+   GateMDR,LDREG,LDCC
+
+Part 3
+----------------------------------------------------
+1) AND R0,RO,#0
+2) LDR R2,R3,#0
+3) ADD R4,R4,48
+4) LD R1,LABEL where LABEL (in memory) is x4000
+5) STR R2,R5,#0
+6) ADD R3,R3,1
+7) AND R4,R4,LABEL where LABEL (in memory) is xFF00
+8) ADD R2,R2,31
+9) AND R3,R3,0  ; clear R3
+   NOT R3,R0    ; take bitwise complement of R3
+   ADD R3,R3,1  ; add one to R3
+   ADD R2,R1,R3 ; add R1 and R3
+10) LD R5,A
+11) .end

@@ -1,0 +1,219 @@
+=======================================================================
+CS-2110       Homework 07 - Assembly / Recursion              Fall 2010
+=======================================================================
+
+This assignment is due by:
+     Day:    Friday, October 15, 2010
+     Time:   before 11:55:59 p.m.
+
+=======================================================================
+      TURN IN THIS ASSIGNMENT ELECTRONICALLY USING T-SQUARE.
+         SUBMISSIONS WHICH ARE LATE WILL NOT BE ACCEPTED.
+=======================================================================
+
+Note: This is an extension of the previous homework assignment. If you
+do not feel you completed the previous assignment satisfactorily, a
+sieve.asm file has been made available which you can use for this
+assignment. Note, however, that this file does not contain a human-
+readable implementation, so it cannot be used as preparation for the
+homework 6 demos!
+
+=======================================================================
+                         The Assignment
+=======================================================================
+
+Now using your sieve algorithm we are now going to use this to
+implement another little algorithm: prime factorization of (almost) any
+number! You must utilize the output from your sieve algorithm here
+(Yes, there are other ways to implement this, but since you already
+have all of the primes calculated you may as well just use them to make
+this more efficient!). For your reference here is the C/LC3 pseudocode
+of what you are to implement in LC3 Assembly:
+
+
+int primes[3001];
+/* The highest possible number is 2^15-1 or 32767 */
+int buffer[15];
+int sieve()
+{
+    /* sieve code here ;) */
+}
+
+int primefactorization(int n, int num, int *buffer)
+{
+    /* If n is less than or equal to 1:
+     * We know one and zero has only one prime factor
+     */
+    if (n <= 1)
+    {
+        /* if there are no items append 0 or 1 to the buffer
+         * and there is 1 item in the buffer
+         */
+        if (num == 0)
+        {
+            *buffer = n;
+            num++;
+        }
+        return num;
+    }
+
+    /* For each valid number */
+    int i;
+    for (i = 0; i <= 3000; i++)
+    {
+        /* Check to see if it is prime */
+        if (primes[i])
+        {
+            int r0, r1;
+
+            /* UDIV divides and mods n and i
+             * the quotient is in r0
+             * and the remainder is in r1
+             * i.e.,
+             * r0 = n / i;
+             * r1 = n % i;
+             */
+            UDIV(n, i, r0, r1);
+
+            /* If i is a multiple */
+            if (r1 == 0)
+            {
+                /* Append to buffer and recurse */
+                *buffer = i;
+                return primefactorization(r0, num + 1,
+                    buffer + 1);
+            }
+        }
+    }
+
+    /* Append number it is a prime
+     * (proof of this is left to the reader)
+     */
+    *buffer = n;
+    return num + 1;
+}
+
+int main(void)
+{
+    /* Make a FUNCTION CALL to sieve */
+    sieve();
+
+    r0 = PRIME_FACT_NUMBER;
+    r1 = 0;
+    r2 = BUFFER;
+
+    /* Make a FUNCTION CALL to primefactorization */
+    r1 = primefactorization(r0, r1, r2);
+
+    /* HALT */
+}
+
+
+You may be wondering what the syntax "*buffer" means. Basically what
+this means is take the address buffer contains and put whatever is on
+the right side of the = into that memory address. buffer always
+contains the address of the current slot in the buffer array.
+
+=======================================================================
+                             Restrictions
+=======================================================================
+
+If you fail to adhere to the following then you could lose points for
+this assignment!
+
+1) Specifications for sieve subroutine.
+    Preconditions:
+        None
+    Postconditions:
+        PRIMES[0]..PRIMES[3000] contains the number in the
+          corresponding index if it is prime or a zero if it isn't
+        No registers are trashed
+
+2) Specifications for primefactorization subroutine.
+    Preconditions:
+        R0 contains the number for which you want to find the factors
+          (Between 0 and 32767)
+        R1 contains num, the number of items in the buffer.
+        R2 contains buffer, the address of the next empty slot in the buffer
+        The PRIMES array is initialized with the output from your
+          sieve algorithm
+    Postconditions:
+        R1 contains the number of elements stored in the buffer
+        R2 contains the prime factors of n
+        No registers are trashed
+
+3) You must use the primes array! You will lose points if you do not.
+
+4) There is no instruction limit restriction for this part. However we
+   will take off points if your code recurses infinitely (really who
+   wants that to happen?).
+
+5) primefactorization must be implemented recursively for you to
+   recieve any credit. It defeats the purpose of this homework for you
+   to do this iteratively.
+
+6) Do not change the names of any of the labels we give you. This is how
+   the autograder knows how to test your code.
+
+7) Follow the exact specifications of the methods we give you.
+
+======
+Notes:
+======
+
+- What do you mean by no registers are trashed?
+
+  What this means is the state of your registers (R0-R6) (minus any
+  register used for a return value) must not be changed by the call to
+  the subroutine. To make sure that you don't trash any registers you
+  save them IN YOUR SUBROUTINE.
+
+  Therefore, if I have a subroutine that uses parameters in R0, R1 and
+  the return value is stored in R0 then after I call it the only
+  register that should be changed is R0! The user should not have to
+  save registers on the stack before calling it this defeats the
+  purpose of making it a subroutine.
+
+- Notice for this part we are asking you to make sieve a subroutine.
+
+  It isn't that much harder to turn your code from part 1 into a
+  subroutine.  If you used R6, then you must change your code around a
+  little to get this to work. If you used R7, then ensure that you
+  aren't calling any subroutines or traps and just put R7 on the stack.
+
+- Note: primefactorization MUST be implemented using recursion.
+
+  What this means is there better be a JSR (not a BR!) to your
+  primefactorization subroutine within the subroutine.
+  
+- Note: Assembly labels are CASE-SENSITIVE.
+
+=====
+Tips:
+=====
+
+ - Start this homework early. You WILL NOT finish if you wait until
+   the last minute.
+
+ - There is ample time to get help with this assignment. If you are
+   stuck, feel free to ask any TA for help. Do so promptly and not at
+   the last minute.
+
+ - Don't be afraid to put stuff on the stack, it may turn out you may
+   need it somewhere down the road.
+
+ - Be sure you are calling UDIV and PRIMEFACT with the correct
+   parameters.
+
+ - Comment your code--it help in the long run.
+
+ - Be sure to TEST TEST TEST your code! Make sure it works for all
+   cases!
+
+ - Be sure to build your stack frame at the start of your subroutine
+   and pop everything off when you return from your subroutine.
+
+=======================
+Deliverables (Updated):
+=======================
+pfact.asm (New file you will create using sieve.asm as a base).

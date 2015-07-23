@@ -1,0 +1,150 @@
+======================================================================
+CS2110                          Lab #2                       Fall 2010
+======================================================================
+
+Objective: To Learn about Bit Masks and Logical and Bitwise Operations
+
+This is not a timed lab, so feel free to collaborate with your neighbors, use
+the book, and ask the TAs for explanation if you need help. When you are done,
+please submit your assignment to T-Square to get "credit" for participating.
+
+------------------------------------
+Part 1: Logical & Bitwise Operations
+------------------------------------
+Compute the following (If necessary assume numbers are in 8 bit 2's complement representation!)
+
+3 & 9
+17 | 13
+2 && 0
+4 || 77
+23 ^ 40
+~43
+~~34
+!~13
+!!32
+~!0
+
+---------------------------------
+Part 2: Bit operations Properties
+---------------------------------
+
+To understand and prepare for part 3 there are some rules/properties that always hold for the bit operations.
+
+Complete the expressions (Assume X is a variable that is 1 bit)
+
+AND	
+X & 1 = 
+X & 0 = 
+X & X = 
+X & ~X = 
+
+OR
+X | 1 = 
+X | 0 = 
+X | X = 
+X | ~X =
+
+XOR
+X ^ 1 = 
+X ^ 0 = 
+X ^ X = 
+X ^ ~X =
+
+
+-----------------
+Part 3: Bit Masks
+-----------------
+
+Write the following functions (in your language of choice) that perform the following operations.
+Note: in your next homework assignment we will force you to code in Java (to make grading easy on us so if you don't know java ask a TA)
+The following code below is Java.
+
+You may not do the following things to implement these functions.
+All of these functions are to be done in O(1) time (i.e. they can be done without use of for/while/dowhile)
+None of these functions should make use of multiplication, division, or modulus.
+Nor none of these functions should make use of a library function (I'm looking right at you Math.pow).
+The only operators you should be using are >>, <<, +, -, &, ^, |, &&, ||, ~, and !.
+
+
+
+Also note yes I could have used short (16 bits) or a char (8 bits) the reason why I did not was (if I recall) because
+if you say any number such as 56 java will interpret it as an int which will lead to compile time errors.
+
+Assume that if an input is supposed to fit within 16 bits that thats all we will be passing to it.
+i.e. if I say short then I mean any number 0x0000-0xFFFF.
+
+	/**
+	 * Sets a bit that is if the bit was 0 then after this call
+	 *  it should be 1
+	 * 
+	 * i.e setBit(0x12345678, 0) //=> 0x12345679
+	 *     setBit(0x12345678, 4) //=> 0x12345678
+	 */
+	public static int setBit(int num, int bit)
+	{
+		return 0;
+	}
+
+	/**
+	 * Toggles a bit that is if the bit was 1 then after this call
+	 *  it should be 0 and vice versa
+	 * 
+	 * i.e toggleBit(0x12345678, 0) //=> 0x12345679
+	 *     toggleBit(0x12345678, 4) //=> 0x12345668
+	 */
+	public static int toggleBit(int num, int bit)
+	{
+		return 0;
+	}
+	
+	/**
+	 * Resets a bit that is if the bit was 1 then after this call
+	 *  it should be 0
+	 * 
+	 * i.e resetBit(0x12345678, 0) //=> 0x12345678
+	 *     resetBit(0x12345678, 4) //=> 0x12345668
+	 */
+	public static int resetBit(int num, int bit)
+	{
+		return 0;
+	}
+	
+	/**
+	 * Sets a byte in the upper or lower 8 bits of a short
+	 * 
+	 * i.e. setByte(0x3456, 0x68, 0) //=> 0x3468
+	 *      setByte(0x4925, 0xFF, 1) //=> 0xFF25
+	 * 
+	 * @param num short that will be modified (will always be a 16 bit number)
+	 * @param b byte to insert into the short (will always be an 8 bit number)
+	 * @param which if which is 0 then modify the last 8 bits otherwise the first 8 bits are modified
+	 * @return the modified short
+	 */
+	public static int setByte(int num, int b, int which)
+	{
+		return 0;
+	}
+	
+	/**
+	 * Checks if the short passed in is negative
+	 * 
+	 * i.e. isNegative(0x8000) //=> 1 
+	 *      isNegative(0xF000) //=> 1
+	 *      isNegative(0x4455) //=> 0
+	 *      
+	 * @param num a short (num will always be a 2's complement 16 bit number)
+	 * @return 1 if it is indeed negative 0 otherwise
+	 */
+	public static int isNegative(int num)
+	{
+		return 0;
+	}
+	
+
+
+------------
+Deliverables
+------------
+
+This file named lab2.txt
+You may submit a .java/.py/.whatever file for the 3rd part

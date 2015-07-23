@@ -1,0 +1,335 @@
+=======================================================================
+CS-2110               Homework 06 - Assembly Sieve            Fall 2010
+=======================================================================
+
+This assignment is due by:
+     Day:    Tuesday, October 5, 2010
+     Time:   before 11:55:59 p.m.
+
+=======================================================================
+      TURN IN THIS ASSIGNMENT ELECTRONICALLY USING T-SQUARE.  
+         SUBMISSIONS WHICH ARE LATE WILL NOT BE ACCEPTED.
+=======================================================================
+
+
+=======================================================================
+**IMPORTANT**  Read this whole file before starting.  It will help you.
+=======================================================================
+
+
+================
+Your assignment:
+================
+
+Write a simple LC-3 assembly program that will generate a list of all
+the prime numbers between 0 and 3000 using a very cool algorithm
+to find them. The algorithm is called the 'Sieve of Eratosthenes' and
+it is surprisingly simple and very powerful.
+
+======================
+The 'Sieve' Algorithm:
+======================
+
+- BACKGROUND
+
+Eratosthenes lived quite a long time ago, back around the years of
+276 - 196 B.C. I don't know about you guys, but it's quite amazing
+that someone back in those days had the innovation to discover
+something like this. And without computers and everything! I guess
+without facebook and video games they had a lot more time on their
+hands.
+
+The Sieve is a method that he invented for looking at a large list of
+numbers and determining which numbers are prime.
+
+
+- ALGORITHM
+
+Start with a list of numbers, incorrectly assuming at first that
+every number is prime (except for 0 and 1 of course, since those are
+not prime, nor will they play a part in our algorithm). How do we go
+about doing this? The method you will be using is to initialize an
+array of integers to non-zero values. Although the typical sieve uses
+a boolean 0 or 1 to represent if a number is primed, we will use 0 to
+mean not prime and the number itself to mean prime. For instance:
+
+PRIMES = the memory address of the start of the array of numbers  (contains the value 0)
+PRIMES + 1 = 0   (remember we are ignoring 0 and 1)
+PRIMES + 2 = 2
+PRIMES + 3 = 3
+PRIMES + 4 = 4
+.
+.
+.
+PRIMES + 10 = 10
+.
+.
+.
+PRIMES + 3000 = 3000
+
+So, to begin with we will have an array that looks like the
+following:
+
+0 0 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 ......
+
+Why are both of the first two numbers 0? Well, 0 and 1 are known to
+not be included in the set of prime numbers. The way we will be
+marking a number as 'not prime' is by zero'ing it out in our array.
+So, all I have done is gone ahead and marked both '0' and '1' as not
+prime by making their values 0.
+
+The next step of the algorithm is just a huge loop. The idea is to
+start at the first non-zero value and mark out all multiples of that
+number in your array. Why? Anything that is divisible by a number
+other than 1 or itself is *NOT* prime, so all multiples of a number
+determined to be prime cannot be prime! To illustrate, we would start
+at the number 2. Since 2 is not zero'd out, we assume it is prime and
+mark out all multiples of 2.
+
+0 0 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 ......
+        X   X   X   X     X     X     X     X     X     X
+
+Which brings our array to look like the following:
+
+0 0 2 3 0 5 0 7 0 9 0 11 0 13 0 15 0 17 0 19 0 21 0 23 ......
+
+After this process is completed for the entire array, we simply go
+back to our starting value of 2 and find the next value which is not
+0. In our case this happens to be 3, so we then start this process
+all over again.
+
+0 0 2 3 0 5 0 7 0 9 0 11 0 13 15 0 0 17 0 19 0 21 0 23 ......
+                  X           X                X
+
+Which brings our array to look like this:
+
+0 0 2 3 0 5 0 7 0 0 0 11 0 13 0 0 0 17 0 19 0 0 0 23 ......
+
+The next step would do 5.  And so on...
+
+If you take a quick look, you will notice that we have already
+successfully found all the prime numbers between 2-23 inclusive.
+Pretty cool huh?
+
+Your goal is to implement this in LC-3 assembly. For instructions on
+how we expect you to do this, continue on down.
+
+========================
+The LC-3 Implementation:
+========================
+
+- THE ARRAY
+===========
+You will be using the BLKW command to allocate 3001 words of memory
+with which you will be storing the list of prime numbers:
+
+PRIMES .BLKW 3001
+
+You MUST ensure that your list of primes is labeled using PRIMES.
+Also, you may be wondering why '3001' and not '3000'. Remember, to
+determine the actual size needed for a 0-based array you need 'end -
+start + 1' spaces, so this comes out to '3000 - 0 + 1', or '3001'.
+
+
+- THE STEPS
+===========
+The first step of your algorithm is, of course, to iterate over this
+memory setting all of the 'array' indexes to their respective values
+as described above.
+
+Then, you simply proceed with the algorithm above. Once you are
+finished determining all of the prime numbers between 2 and 3000,
+halt your program.
+
+You may be wondering how you can check if your algorithm is correct.
+Well, the reason you are storing the actual value of the index rather
+than a simple '1' or '0' (for 'prime' or 'not prime' respectively) is
+so you can rapidly look through the memory and determine if the
+numbers you found to be prime are indeed prime.
+
+
+- GOTCHAS
+=========
+When doing this, we recommend you make printouts and label what each
+register is doing in each part of the program.  You will find
+yourself using registers to do three entirely different things with
+registers:
+
+ - An index, such as a counter.
+ - A pointer, or a memory address.
+ - A plain number read from memory.
+
+In assembly it is _VERY_ easy to confuse these, because everything
+is, in the end, just bits.  We want you to keep these in mind to be
+VERY CAREFUL about the following:
+
+ - Adding memory addresses.  NEVER add two memory addresses together. 
+ Take a second to think about this.  It makes sense to add two
+ integers -- for instance, 3 + 5.  It also makes sense to add an
+ integer to a pointer, such as the start address of PRIMES and 200,
+ to access the 200th element of the PRIMES array.  Beware -- you will
+ get into trouble when adding the address of PRIMES to the address of
+ the twentieth element of PRIMES -- this will get you a very high
+ memory address that is way outside the range of the array.  Thus,
+ when labelling your assembly on paper, be sure to note whether an integer
+ or a pointer is in the register.
+
+ - Dereferencing (LDR) the right number of times.  Be careful about
+ whether a register has the address of a memory location, or the value
+ stored in that memory location.
+
+
+- TIPS
+======
+Getting Started
+
+We strongly recommend that you write the pseudo code first in a high level 
+programming language that you understand (like C or Java).  This will 
+make it far easier in the long run when you try to code the assembly.
+
+Code Quality
+
+Document all your steps, and label what your registers are doing. 
+Sometimes, if it looks like you are creating a loop, you might even
+indent the inner loop code. For example:
+
+    ld r3, CONSTANT_N312          ; Load the constant -312 into r2
+    OUTER_LOOP_START:             ; beginning of outer loop
+        ; R0 is the X (outer loop) counter
+        ; R2 is the Y (inner loop) counter
+        add r0, r0, #1            ; Increment X counter
+        and r2, r2, #0            ; Set Y counter to zero
+        INNER_LOOP_START:
+            add r2, r2, r0        ; Increment Y by X
+            brp INNER_LOOP_START  ; Loop while Y does not roll around
+                                  ; to a negative value
+        and r0, r0, #1            ; Increment X
+        add r1, r0, r3            ; Check r0 against -312
+        brn OUTER_LOOP_START      ; Loop while X is < 312
+    ...
+    CONSTANT_N312: .fill #-312    ; The constant value -312 for the loop.
+
+General Debugging
+
+If stepping through every instruction is too slow, try using
+breakpoints.  One way is to right-click on an address and choose "Set
+Breakpoint".  Another option on some simulators is to double-click
+the address, or to click all the way on the leftmost part of the
+address line.
+
+Viewing the Array
+
+If you are using the graphical SimpLC-3 simulator to debug, do a
+View..New View, and enter "PRIMES" into the Track box.  This will let
+you view the PRIMES array separately as it is updated.
+
+If you are using a text simulator, you can repeatedly run
+   step; list PRIMES
+or some other command sequence.
+
+
+- THE TOOLS
+===========
+To write assembly, all you have to do is write the assembly code into
+a text file that ends in .asm.  Next, you should familiarize yourself
+with the assembler.  Although the CS2110 simulator accepts .bin and
+.hex files, it is not very friendly with assembly -- if anything is
+wrong, it will only tell you there is an error, but not what the
+error is.
+
+To run the assembler on a CoC Linux machine, run:
+
+  lc3as <file>.asm
+
+This will create <file>.obj which can be loaded into the simulator:
+
+  simp <file>.obj  (text-based)
+  OR
+  simpl <file>.obj (graphical - RECOMMENDED)
+
+It also creates a <file>.sym, which lets the simulator know the
+memory addresses of each symbol name.  (If you are running the Mac
+bundle, the lc3as executable is included in the Simpl.app folder).
+
+If you use Windows at home and are going to http://ara.cc.gatech.edu
+in order to do work in linux then the tools are in different
+locations:
+   To use the assembler, run:
+       lc3as <file>.asm
+   To use the text-based simulator, run:
+       simp <file>.obj
+   To use the graphical simulator (RECOMMENDED), run:
+       simpl <file>.obj
+at the command line in the terminal.
+Also note that the terms konsole and terminal are equivalent but console
+refers to the text box that appears when you use the graphical simulator.
+
+
+
+=============
+Restrictions:
+=============
+
+1 - Your program must finish before 100,000 instructions are
+    executed.  If your program executes more than this, then it will
+    be halted and your program will be graded at that point.
+
+    As long as you follow the algorithm above, you do not have to
+    worry about the above restriction.
+
+2 - You must start your array of primes by labelling it PRIMES in
+    your assembly code.
+
+3 - You must store the elements of the array in the format we specify.
+    Be sure to double-check that the beginning of PRIMES corresponds
+    to the number 0.
+
+4 - Remember, like the rest of your assignments, if it does not assemble
+    or compile, you get a ZERO.  No exceptions.  Check to make sure
+    your code compiles before submitting!
+
+===========
+Submission:
+===========
+
+Turn in your assembly file, named 'sieve.asm'.
+
+Ensure that your list of primes is as follows:
+PRIMES .BLKW 3001
+
+We will be checking this list.  The list is assumed to follow this format:
+PRIMES + 2 = whether 2 is a prime = 2
+PRIMES + 3 = whether 3 is a prime = 3
+PRIMES + 4 = whether 4 is a prime = 0
+PRIMES + 5 = whether 5 is a prime = 5
+...
+PRIMES + 3000 = whether 3000 is a prime or not = 0
+
+If you do not store your data in this format, then you will not receive
+credit.  No exceptions.
+
+=======
+Advice:
+=======
+
+Get started early on this homework. A lot of people struggle with
+converting high level programming into assembly which is essentially
+what we are asking you to do. This should be fairly easy but make sure
+you give yourself a decent amount of time to think about the problem.
+
+As always, the TA's are there to help. However, please be sure to do
+your part before asking a question and read the book.  In order to
+learn what you don't know, you must first know what question to ask.
+
+**Important Note: If you want to store something to memory, make sure you
+                  label the memory location above your .BLKW statement!
+So if you have:
+   PRIMES .BLKW 3001
+   SIZE   .FILL #3001
+SIZE will actually be too far away from the PC to access so your
+program will break everytime. To avoid this problem do this instead:
+   SIZE   .FILL #3001
+   PRIMES .BLKW 3001
+
+This homework will be autograded so be sure to compile and test your code
+on our machines, do not zip your files, and use the specified format!

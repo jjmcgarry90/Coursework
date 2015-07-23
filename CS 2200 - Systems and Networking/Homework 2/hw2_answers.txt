@@ -1,0 +1,198 @@
+Homework 2
+CS 2200 Summer 2009
+
+Jessie McGarry
+jmcgarry3
+===================
+
+=========
+Problem 1
+=========
+
+Part A
+------
+
+i) Without PCINC
+
+     State1
+	  DrPC, LdA,LdMAR
+	  Goto State2
+	  
+     State2
+	  DrMem, LdIR
+	  Goto State3
+
+     State3
+	  func = 11, DrALU, LdPC
+	  Goto State4
+	
+     State4
+	  RegSelLo, DrREG, LdA
+	  Goto State5
+
+     State5
+	  DrOFF, LdB
+	  Goto State6
+
+     State6
+	  DrALU, WrREG
+	  
+	  
+ii) With PCINC 
+  
+       State1 
+	  IncToPC, LdPC, DrPC, LdMAR
+	  Goto State2
+
+       State2
+	  DrMEM, LdIR
+	  Goto State3
+
+       State3
+	  regno = IR[8..5], DrREG, LdA
+	  Goto State4
+
+       State4
+	  DrOFF, LdB
+	  Goto State5
+
+       State5
+	  DrALU, WrREG
+
+ 
+ 
+ 
+ Part B
+ ------
+ 
+ Including the fetch states, the CPI with the PCINC enhancement is 5, and 
+ the CPI without is 6.
+
+
+ Part C
+ ------
+
+ The PCINC speeds up the ADDI instructions by a factor of 6/5 (using old execution time / new execution time) 
+ 
+
+=========
+Problem 2
+=========
+
+Part A
+-------
+
+i) 	 AMD 	- gcc = 1.09   - spice = 1.04
+	 INTEL  - gcc = 1.12   - spice = 1.16
+      
+
+ii)   INTEL
+
+
+
+iii)  INTEL
+
+
+
+Part B
+-------
+
+1/19 of the instructions must be multiply
+
+
+=========
+Problem 3
+=========
+
+Part A
+------
+
+task
+                   ----
+time   BG      DISK      SOUND     CLOCK
+----   --      ----      -----     -----
+
+ 0mS:                             CLOCK
+ 2mS:          DISK
+ 4mS:          DISK
+ 6mS:	       DISK
+ 8mS:	       DISK
+10mS:				  CLOCK
+12mS:		         SOUND
+14mS:			 SOUND
+16mS:			 SOUND
+18mS:  BG
+20mS:  				  CLOCK
+22mS:			 SOUND
+24mS:			 SOUND
+26mS:			 SOUND
+28mS:  BG
+30mS:  				  CLOCK
+32mS: 
+34mS:  BG
+36mS:  BG
+38mS:  BG
+40mS:				  CLOCK
+42mS:	       SOUND
+44mS:	       SOUND
+46mS:          SOUND
+48mS:	       
+50mS:			          CLOCK
+
+
+Part B
+------
+
+    26.32 seconds
+ 
+
+Part C
+------
+    CLOCK = 2 mS
+    SOUND = 18 mS
+    DISK = 10 mS
+
+=========
+Problem 4
+=========
+
+Part A
+------
+
+ A synchronous event is planned, while an asynchronous event is not. If you  
+ intentionally give someone an object, that's synchronous. If someone unexpectedly gives something to you, that's asynchronous.
+
+Part B
+------
+
+Every discontinuity has a unique vector associated with it. Upon an interrupt, that vector is looked up in the interrupt vector table to find the address of the handler code.
+
+
+Part C
+------
+
+Save $k0;
+enable interrupts;
+1. Save interrupted process state to stack
+2. Execute device-specific code
+3. Restore interrupted process state from stack.
+disable interrupts;
+restore $k0;
+4. Execute RETI to return.
+
+
+Part D
+------
+
+At startup, the system initializes a duplicate of the stack pointer register to serve as the system stack. This is where all registers are saved during an interrupt.
+
+Part E
+------
+
+Due to the variable nature of location of the user stack, the handler does not know which part of memory the user stack is in. Therefore a separate stack, the system stack, is used.
+
+Part F
+------
+
+Load PC from $k0;
+Enable interrupts;

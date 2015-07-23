@@ -1,0 +1,100 @@
+======================================================================
+CS2110                          Lab #8                       Fall 2010
+======================================================================
+
+This is not a timed lab, so feel free to collaborate with your neighbors, use
+the book, and ask the TAs for explanation if you need help. When you are done,
+please submit your assignment to T-Square to get credit! for participating.
+	
+From this point onward turning in your lab assignment is mandatory.
+Each lab is worth 10 points and you are to attempt the questions presented in the lab assignment.
+If you turn in an empty document then you will get a zero for the lab.
+	
+You must also turn in lab assignments on time failure to do so will result in half credit for this lab.
+You have until 11:55PM the day after lab to submit this.
+
+
+1) Are the following instructions valid? If one is invalid then provide the correct instruction(s)
+
+  a) Adds 102 to R0
+     ADD R0, R0, 102
+
+     No, 102 is out of the imm5 range.
+     
+  b) Subtract 16 from R1 and put the result in R3
+     ADD R0, R1, #-16
+
+     No, this would store the value in R0.
+     The instruction should be ADD R3,R0,-16
+  
+  c) ADD 1 to R3 and put the result in R4
+     ADD R3, 1, R4
+
+     No, the operands are out of order.
+     The instruction should be ADD R4,R3,1
+     
+  d) Put R3 into R4 (that is R4 = R3)
+     LDR R4, R3, #0
+	
+     Yes.
+	
+
+  e) Branch on positive to label Loop
+     BRP Loop
+
+     No, should be BRp
+     
+  f) Load the address x3012 into R6 (that is R6 = x3012)
+     LD R6, x3012
+
+     No. The address would have to be stored in memory.
+     Then the instruction would be LEA R6,ADDRESS
+
+  g) Clear the top 8 bits of R2
+     AND R2, R2, xFF
+
+     No, AND R2,R2,CLEAR where CLEAR is x00FF
+     
+  h) Load From memory at the address formed by adding R0 and the value at memory address A into R5
+     LDR R5, R0, A
+     
+     No, needs the extra instruction LEA R5,R5
+
+  i) Put the address of symbol ARY into R4
+     LEA R4, ARY
+     
+     Yes. 
+
+  j) ADD 2 and 3 and put the result in R5
+     ADD R5, 2, 3
+	
+     No, there is no version of add that takes two immediate values.
+
+     
+2) Write sumtorial.  Sumtorial is similar to factorial except you are adding instead of multiplying.
+
+SUMTORIAL(0) is 0
+SUMTORIAL(1) is 0 + 1 is 1
+SUMTORIAL(2) is 0 + 1 + 2 is 3
+SUMTORIAL(3) is 0 + 1 + 2 + 3 is 6
+SUMTORIAL(4) is 0 + 1 + 2 + 3 + 4 is 10
+
+The parameter to sumtorial is stored at the symbol N
+and you are to store your answer at the sumbol ANS
+
+Here is a template
+
+.orig x3000
+; Your code here
+
+N .fill 2 ; Value to find the sumtorial of
+ANS .fill 0 ; Put SUMTORIAL(N) here.
+.end
+
+3) Write an assembly program that prints out "Hello world"
+
+.orig x3000
+
+HELLO .stringz "HELLO WORLD"
+
+.end

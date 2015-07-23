@@ -1,0 +1,100 @@
+Problem 1
+---------
+
+A) The HAL 9000 computer has 16 address wires and has a 8 bit word size.
+
+The addressability of this memory is ?
+The address space of this memory is ?
+
+
+Problem 2
+---------
+What is the difference between level triggered and edge triggered logic?
+
+What is the difference between combinational and sequential logic?
+
+Ok now complete the following table
+
+|=======================================================|
+| Component | Edge | Level | Combinational | Sequential |
+|=======================================================|
+| ALU       |      |       |               |            |
+| AND GATE  |      |       |               |            |
+| REGISTER  |      |       |               |            |
+| MEMORY    |      |       |               |            |
+| ENCODER   |      |       |               |            |
+| GATED D   |      |       |               |            |
+| RS LATCH  |      |       |               |            |
+========================================================|
+
+Problem 3 (Easy)
+---------
+Answer the following.
+
+So I have three LEDS red, green, and blue. And I want the circuit to behave as follows.
+
+1) None of the LEDS are turned on
+2) The red LED is the only led that is on
+3) The green LED is the only led that is on
+4) The blue LED is the only led that is on
+5) All of the LEDs are turned on
+
+So the leds should go
+None On -> Red On -> Green On -> Blue On -> All On -> Back to None On.
+
+
+1) How many states will you need for this state machine?
+2) How many outputs will you have to this state machine?
+3) How many inputs?
+
+4) Now draw a state machine diagram for this circuit I suggest working with someone near you and getting a TA to check it over once you are done.
+You can do this on paper or in paint or something. (You don't have to turn this in for this lab assignment)
+
+5) Now take the state machine diagram you created and make it into a logisim circuit name it lab4Part3.circ
+
+
+Problem 4 (Medium)
+---------
+So I then showed my circuit to Bill and he was not too happy with it since the LEDS flash all of the time!
+Bill has told me that I should add an on/off button to my circuit to turn the flashing LEDs on and off.
+
+Requirements
+1) The machine starts off with the lights turned off
+2) When I press and release the On/Off button the lights should behave as like in previous problem
+3) When I press and release the button in the All On state the lights should turn off
+4) Afterward if I press and release the button it should turn the lights on again.
+
+1) How many states will you need for this state machine (Should be more than problem 2)?
+2) How many inputs will this circuit have?
+3) How many outputs will you now have to this state machine?
+Note: Make sure that when I press the button that the machine doesn't turn on/off very rapidly! (Hint: dummy states)
+
+4) Now draw a state machine diagram for this circuit I suggest working with someone near you and getting a TA to check it over once you are done.
+(You don't have to turn this in for this lab assignment)
+
+5) Implement this state machine as a circuit. Save it as lab4Part4.circ
+
+Problem 5 (Hard)
+---------
+This system has three inputs as buttons A, B, and C and an output with is a single LED.  
+
+Requirements
+1) The circuit starts off with the LED turned off.
+2) When button A is pressed then the LED should turn on and stay on even after A is released.
+3) When button B is pressed the LED should turn off and turn on repeatedly even after B is released.
+4) When button C is pressed the LED should turn off and stay off even after C is released.
+
+1) Draw a state machine diagram for this circuit.  This one may be a bit tricky!
+
+2) How many states will you need for this state machine?
+3) How many inputs?
+4) How many outputs?
+
+5) Implement this state machine as a circuit. Save it as lab4Part5.circ
+
+Deliverables
+------------
+This file named lab4.txt
+lab4Part3.circ
+lab4Part4.circ
+lab4Part5.circ

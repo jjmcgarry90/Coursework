@@ -1,0 +1,60 @@
+======================================================================
+CS2110                          Lab #1                     Summer 2010
+======================================================================
+
+Objectives: - Logisim tutorial
+            - Practice basic binary concepts
+
+This is not a timed lab, so feel free to collaborate with your neighbors, use
+the book, and ask the TAs for explanation if you need help. When you are done,
+please submit your assignment to T-Square to get credit for participating.
+
+Please record any answers to the following questions in a txt document and submit it
+and the end of lab.
+
+
+1) Complete the following table. Assume each number in the table an 8 bit 2's complement number.
+
+   --------------------------------------------
+   | Decimal |  Binary  | Octal | Hexadecimal |
+   |---------|----------|-------|-------------|
+   |   72    |          |       |             |
+   |         | 01100101 |       |             |
+   |         | 11101001 |       |             |
+   |         |          |  057  |             |
+   |         |          |       |    0x39     |
+   |   -55   |          |       |             |
+   |         |          |  0306 |             |
+   |         |          |       |    0xF3     |
+   --------------------------------------------
+
+2) Answer the following. (Note: -0 and 0 are considered to be the same number):
+
+a) With unsigned binary how many distinct numbers can you represent with a 9 bit binary number? 
+   What values can you represent?
+b) With 2's complement how many distinct numbers can you represent with a 2 bit binary number?
+   What values can you represent?
+c) With signed magnitude how many distinct numbers can you represent with a 12 bit binary number?
+   What values can you represent?
+d) How many bits will it take to represent 27 in unsigned binary?
+e) How many bits will it take to represent 340 in 2's complement binary?
+
+
+------------------------------
+A small survey more for me:
+
+
+1) What is your major? (if you are CS then just mention your two threads here)
+
+2) What year are you?
+
+3) What do you expect to learn from this class? Anything you are interested in?
+
+4) Rate your programming experience? Can you program?
+
+5) Anything else you'd like to say about yourself (What are you known for for instance, anything you've done over the summer, etc)?
+
+
+Deliverables
+------------
+This file saved as lab1.txt

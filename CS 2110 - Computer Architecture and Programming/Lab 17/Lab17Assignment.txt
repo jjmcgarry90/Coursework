@@ -1,0 +1,93 @@
+==================================================================================================================
+CS2110                                             Lab #17                                               Fall 2010
+==================================================================================================================
+
+Pointer Tracing!
+---------------
+
+1) Please tell me what changes on each line.
+
+Statement	|    a    |    b    |    c    |    pa    |    pb    |    pc    |
+--------------------------------------------------------------------------------
+int a = 30;	|         |         |         |          |          |          |
+int b = a + 5;	|         |         |         |          |          |          |
+int c = 67;	|         |         |         |          |          |          |
+int* pa = &a;	|         |         |         |          |          |          |
+int* pb = &b;	|         |         |         |          |          |          |
+int* pc = &c;	|         |         |         |          |          |          |
+*pa = 33;	|         |         |         |          |          |          |
+c = 2;		|         |         |         |          |          |          |
+*pb = *pc;	|         |         |         |          |          |          |
+pa = pc;	|         |         |         |          |          |          |
+*pc = 20;	|         |         |         |          |          |          |
+*pb = 3;	|         |         |         |          |          |          |
+pc = &b;	|         |         |         |          |          |          |
+a = 2		|         |         |         |          |          |          |
+*pa = 3;	|         |         |         |          |          |          |
+*pc = *pb	|         |         |         |          |          |          |
+b = 4		|         |         |         |          |          |          |
+
+printf("%d %d %d %d %d %d\n", a, b, c, *pa, *pb, *pc);
+
+b) What gets printed?
+
+2) Storage Classes and Visibility
+
+Edit the "files" below based on a-g
+
+    a.) In main.c define an int a which will be global and initialize it to 10.
+    b.) In alpha.c give the entire file access to the variable a from part a.
+    c.) In main.c define an int b which will be global and initialized to 63;
+    d.) Make the function in main.c named bollywood visible only to the functions in main.c
+    e.) In function bollywood define an int goober which will be initialized to 20 and will have a value that persists.
+    f.) In alpha.c in the function skip define an int pq which will be initilaized to 11
+    g.) In alpha.c define a int variable q which will only be visible in that file.
+   
+    ------------------------------------------------------------------
+    File: main.c:
+    ------------------------------------------------------------------
+    int main()
+    {
+   
+    }
+   
+    int bollywood()
+    {
+   
+   
+    }
+
+    ------------------------------------------------------------------
+    File: alpha.c:
+    ------------------------------------------------------------------
+   
+    void skip(int r)
+    {
+
+    }
+   
+    int bell()
+    {
+   
+    }
+    
+3) Datatypes
+    
+    1) What is a void pointer? What are they useful for?
+
+    2) Are the following statements valid? (Note a statement is invalid if it generates a warning or a compile time error!)
+	a.) char* a; 
+	    char* b; 
+	    a = &b;
+         
+	b.) int *p;
+	    *p = (int*)0;
+         
+	c.) char *cp = (char*) 0x1000;
+	    int *ip = cp;
+                
+	d.) char *cp = (char*) 0;
+	    void *vp;
+	    int *ip;
+	    vp = cp;
+	    ip = vp;

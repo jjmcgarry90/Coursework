@@ -1,0 +1,43 @@
+Jessie McGarry
+
+A	B	A&B
+0	0	0
+0	1	0
+1	0	0
+1	1	1
+z	z	z	
+z	0	0
+z	1	z
+0	z	0
+1	z	z
+
+
+A	B	A|B
+0	0	0
+0	1	1
+1	0	1
+1	1	1
+z	z	z	
+z	0	z
+z	1	1
+0	z	z
+1	z	1
+
+
+A	B	A^B
+0	0	0
+0	1	1
+1	0	1
+1	1	0	
+z	z	z
+z	0	z
+z	1	z
+0	z	z
+1	z	z
+
+
+A	~A
+0	1
+1	0
+z	z
+

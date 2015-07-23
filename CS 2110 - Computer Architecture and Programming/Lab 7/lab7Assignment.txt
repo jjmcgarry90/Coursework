@@ -1,0 +1,54 @@
+======================================================================
+CS2110                          Lab #7                       Fall 2010
+======================================================================
+
+This is not a timed lab, so feel free to collaborate with your neighbors, use
+the book, and ask the TAs for explanation if you need help. When you are done,
+please submit your assignment to T-Square to get credit! for participating.
+	
+From this point onward turning in your lab assignment is mandatory.
+Each lab is worth 10 points and you are to attempt the questions presented in the lab assignment.
+If you turn in an empty document then you will get a zero for the lab.
+
+
+1) Here I have this simple assembly program. Can you tell me what is in each of the indicated registers after I run it?
+(Note: don't just open simpl and run this program I'm watching you!, just running it defeats the purpose of even asking this question)
+
+.orig x3000
+	LEA R0, SIMPLE 		;x3000
+	LD R1, SIMPLE   		;x3001
+	LDR R2, R1, #0  		;x3002
+	LDR R3, R1, #1  		;x3003
+	LDI R4, SIMPLE  		;x3004
+	HALT				;x3005
+
+	SIMPLE .fill x3500		;x3006
+	BLARRG .fill #2110	;x3007
+.end
+
+.orig x3500
+	ITSOVER .fill #9000	;x3500
+	RANDOM .fill #42		;x3501
+.end
+
+R0: x3006
+R1: x3500
+R2: #9000
+R3: #42
+R4: #9000
+
+2) Make the LC3 Register File.
+	a) What are the inputs?
+	b) What are the outputs?
+	c) How many registers does the LC3 have?
+
+3) Make the LC3 Logic. Controlling the NZP registers.
+
+
+4) How does the and instruction work in the datapath? 
+
+a) The contents of both registers are bitwise ANDed and that result
+   is stored in DR.
+b) If the most significant bit of the imm5 value is 1, then
+   the value is sign extended before being ANDed with the source
+   register. If the leading bit is 0, there is no sign extention.

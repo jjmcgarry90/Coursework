@@ -1,0 +1,85 @@
+======================================================================
+CS2110                      Lab 9                            Fall 2010
+======================================================================
+
+Objective: Learning how to code some simple programs in LC-3 Assembly.
+
+Don't hesitate to ask the TA's for help. If you are stuck on
+one part, or not clear about what it's asking, feel free to
+ask. Remember, we are here to help you :)
+
+This is not a timed lab so talk with your friends, use the book, use a TA, etc.
+
+----
+Easy
+----
+
+Write a TRAP. That ADDs the values stored in R0, R1, and R2 and puts the result in R0.
+
+Specifications
+--------------
+This trap should be callable by saying TRAP x30 in your code.
+
+Preconditions:
+R0, R1, and R2 contains the values you want to ADD together.
+
+Postconditions:
+R0 contains R0 + R1 + R2
+No other registers (except R7) are modified (Don't be a goober! ;))
+
+save this program as lab10easy.asm
+
+
+----
+Mild
+----
+
+Code multiply. Here is the C/Java version of multiply.
+
+int multiply(int a, int b)
+{
+	int n;
+	int value = 0;
+	for (n = b; n > 0; n--)
+	{
+		value += a;
+	}
+	return value;
+}
+
+Specifications
+-------------
+
+Preconditions:
+R0 contains A
+R1 contains B
+R6 is the stack pointer and points to the top of the stack.
+
+Postconditions:
+R0 still contains A
+R1 still contains B
+R2 contains A*B
+NO REGISTERS (except for R7) ARE TRASHED
+
+Here is a template if you so choose to use it.
+
+.orig x3000
+	; LOAD A into R0
+	; LOAD B into R1
+	; CALL THE SUBROUTINE MULTIPLY HERE
+	HALT
+	
+	A .fill 5
+	B .fill 3
+.end
+
+save this program as lab10mild.asm
+
+
+
+------
+Medium
+------
+
+In a file named lab9.txt tell me feedback about the class in this file!
+FREE POINTS!!!!

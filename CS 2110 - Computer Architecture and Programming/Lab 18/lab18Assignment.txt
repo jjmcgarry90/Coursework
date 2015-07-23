@@ -1,0 +1,106 @@
+==================================================================================================================
+CS2110                                             Lab #18                                               Fall 2010
+==================================================================================================================
+
+Objective: Datatypes and Function Pointers
+
+Don't hesitate to ask the TA's for help. If you are stuck on
+one part, or not clear about what it's asking, feel free to
+ask. Remember, we are here to help you :)
+
+This is not a timed lab so talk with your friends, use the book, use a TA, etc.
+
+Datatypes
+---------
+Do the following assignments make sense? Why or why not?
+
+1) char hello[5] = "HELLO";
+   char* hey = hello;
+
+2) int a;
+   int b = &a;
+   
+3) #define GIMME *(u32*) 0x3000
+   u32 c;
+   GIMME = &c;
+   
+4) #define GIMME *(u32*) 0x3000
+   u16 d;
+   GIMME = d;
+   
+5) char** a;
+   char* b;
+   char*** c;
+   
+   b = *a;
+   c = &b;
+   a = *c;
+   
+6) #define GIMME *(u32**) 0x3000
+   u16 d;
+   GIMME = &d;
+
+Swap
+----
+Below is the code for swap
+
+
+int main(void)
+{
+  int x = 1;
+  int y = 2;
+  
+  swap(x, y);
+  printf("x = %d y = %d", x, y);
+  return 0;
+}
+
+void swap(int x, int y)
+{
+  int temp;
+  temp = x;
+  x = y;
+  y = temp;
+}
+
+What is the output?
+Why is this so?
+
+Now write a function that will swap two int pointers below.
+
+
+Function Pointers
+-----------------
+In a new file named fp.c
+
+Write a main function
+In this main function declare an array of integers and initialize it with some values.
+
+Write the following functions
+1) A function that takes in an int and prints it.
+2) A function that takes in an int and prints it only if it is even
+3) A function that takes in an int and prints it only if it is odd
+
+(Note the prototype should match this "void func(int)")
+
+Write the following functions
+4) A function that takes in an int and returns 2 times the int passed in
+5) A function that takes in an int and returns the square of the int passed in
+6) A function that takes in an int and returns the absolute value of that int.
+
+(Note the prototye should match this "int func(int)")
+
+Declare a function pointer that can be used to point to the first three functions you declared
+7)
+
+Declare a function pointer that can be used to point to the second three functions you declared
+8)
+
+9) Write a function (named traverse) that will traverse the array (iterate through it) and call a function on each element.
+Note the prototype should take in a pointer (the array), a size_t type (the number of elements in the array), and a function pointer type (your answer to 7)
+
+10) Now Write a function (named collect) that will traverse the array and set each element to the return value of the function.
+Note the prototype should take in a pointer (the array), a size_t type (the number of elements in the array), and a function pointer type (your answer to 8)
+
+11) Now test the power of function pointers!
+Make calls to your traverse function and collect functions to play around with function pointers.
